@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @attack.status %>
+</p>
+
+<p>
+  <strong>Case ID:</strong>
+  <%= @attack.case_id %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @attack.client %>
+</p>
+
+<p>
+  <strong>Attack type:</strong>
+  <%= @attack.attack_type %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @attack.url %>
+</p>
+
+<p>
+  <strong>Detection time:</strong>
+  <%= @attack.detection_time %>
+</p>
+
+<p>
+  <strong>Detection method:</strong>
+  <%= @attack.detection_method %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @attack.notes %>
+</p>
+
+<%= link_to 'Edit', edit_attack_path(@attack) %> |
+<%= link_to 'Back', attacks_path %>

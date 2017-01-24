@@ -1,0 +1,49 @@
+<%= form_for(@attack) do |f| %>
+  <% if @attack.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@attack.errors.count, "error") %> prohibited this attack from being saved:</h2>
+
+      <ul>
+      <% @attack.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :"Attack" %> <%= f.label :"Status" %><br>
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :"Case" %> <%= f.label :"ID", style:"text-transform: uppercase" %><br>
+    <%= f.text_field :case_id %>
+  </div>
+  <div class="field">
+    <%= f.label :client %><br>
+    <%= f.text_field :client %>
+  </div>
+  <div class="field">
+    <%= f.label :attack_type %><br>
+    <%= f.text_field :attack_type %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br>
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :detection_time %><br>
+    <%= f.text_field :detection_time %>
+  </div>
+  <div class="field">
+    <%= f.label :detection_method %><br>
+    <%= f.text_field :detection_method %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br>
+    <%= f.text_field :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

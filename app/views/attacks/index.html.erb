@@ -1,0 +1,50 @@
+<style>
+  .uRl {
+    overflow: hidden;
+  }
+  .uRl:hover {
+    overflow: auto;
+  }
+</style>
+
+<p id="notice"><%= notice %></p>
+
+<h1 align="center">Attacks Log</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Attack Status</th>
+      <th>Case ID</th>
+      <th>Client</th>
+      <th>Attack type</th>
+      <th align="center"><div align="center" style="width:100%; overflow:auto">Url</div></th>
+      <th>Detection Time</th>
+      <th>Detection Method</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @attacks.each do |attack| %>
+      <tr>
+        <td><%= attack.status %></td>
+        <td><%= attack.case_id %></td>
+        <td><%= attack.client %></td>
+        <td><%= attack.attack_type %></td>
+        <td align="center"><div class="uRl" align="center" style="width:75%"><%= attack.url %></div></td>
+        <td><%= attack.detection_time %></td>
+        <td><%= attack.detection_method %></td>
+        <td><%= attack.notes %></td>
+        <td><%= link_to 'Show', attack %></td>
+        <td><%= link_to 'Edit', edit_attack_path(attack) %></td>
+        <td><%= link_to 'Destroy', attack, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Attack', new_attack_path %>

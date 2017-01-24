@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  case_id: MyString
+  client: MyString
+  attack_type: MyString
+  url: MyString
+  detection_time: MyString
+  detection_method: MyString
+  notes: MyString
+
+two:
+  case_id: MyString
+  client: MyString
+  attack_type: MyString
+  url: MyString
+  detection_time: MyString
+  detection_method: MyString
+  notes: MyString
