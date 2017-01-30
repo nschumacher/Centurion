@@ -1,3 +1,55 @@
 // Place all the styles related to the Attacks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "color_palette";
+@import "sidebar_nav";
+.URL {
+  overflow: hidden;
+  // width: 75%;
+}
+.URL:hover {
+  overflow: auto;
+}
+body {
+  background-color: $gray;
+}
+.container-fluid {
+  padding-left: 0; //this locks the sidebar nav against the left side
+}
+h1{
+  color: $gold_alt_1;
+}
+.page_content {
+  background-color: rgba($gray_alt_2, .5);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .7);
+}
+table {
+  color: $gold;
+  th{
+    color: $gold_alt_1;
+    text-shadow: $text_shadow_default;
+    text-align: center;
+    border-color: $red !important;
+  }
+  td {
+    text-align: center;
+    text-shadow: $text_shadow_default;
+    border-top: none !important;
+  }
+  tr:hover {
+    background-color: $gray_alt_2 !important;
+    color: rgba($gold_alt_3, 1);
+  }
+}
+#search_box {
+  background-color: black;
+  border: none;
+  border-radius: 0px;
+  border-bottom: 1px solid gray;
+  color: #B1810B;
+}
+#search_button {
+  color: gray;
+  background-color: black;
+  float: left;
+}

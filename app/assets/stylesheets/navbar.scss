@@ -1,0 +1,10 @@
+@import "color_palette";
+.navbar {
+  background-color: $gray_alt_1;
+  border-radius: 0;
+  border: none;
+  a{
+    color: $gold_alt_1 !important;
+    text-shadow: $text_shadow_default;
+  }
+}
