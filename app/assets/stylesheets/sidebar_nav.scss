@@ -2,7 +2,8 @@
 .sidebar_nav_container{
   background-color: rgba($gray_alt_2, .5);
   color: rgba($gold, .6);
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, .7);
+  box-shadow: $box_shadow_default;
+  font-family: 'Cinzel', serif !important;
 }
 .sidebar_nav_entry {
     border-bottom: 1px solid $gold_alt_1;

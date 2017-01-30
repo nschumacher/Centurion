@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "color_palette";
 @import "sidebar_nav";
+@import url('https://fonts.googleapis.com/css?family=Cinzel');
 .URL {
   overflow: hidden;
   // width: 75%;
@@ -12,24 +13,26 @@
 }
 body {
   background-color: $gray;
+  // font-family: 'Cinzel', serif !important;
+  color: $gold_alt_1;
 }
 .container-fluid {
   padding-left: 0; //this locks the sidebar nav against the left side
 }
-h1{
-  color: $gold_alt_1;
-}
 .page_content {
   background-color: rgba($gray_alt_2, .5);
   box-shadow: 2px 2px 6px rgba(0, 0, 0, .7);
+  padding-top: 10px;
+  overflow: auto;
 }
 table {
-  color: $gold;
+  color: $gold_alt_1;
   th{
-    color: $gold_alt_1;
+    color: $gold_alt_2;
     text-shadow: $text_shadow_default;
     text-align: center;
     border-color: $red !important;
+    font-family: 'Cinzel', serif !important;
   }
   td {
     text-align: center;

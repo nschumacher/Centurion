@@ -1,10 +1,14 @@
 @import "color_palette";
+@import url('https://fonts.googleapis.com/css?family=Cinzel');
 .navbar {
   background-color: $gray_alt_1;
   border-radius: 0;
   border: none;
+
   a{
     color: $gold_alt_1 !important;
     text-shadow: $text_shadow_default;
+    font-family: 'Cinzel', serif !important;
   }
+  box-shadow: $box_shadow_default;
 }
