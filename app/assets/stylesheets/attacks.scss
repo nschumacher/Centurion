@@ -4,6 +4,7 @@
 @import "color_palette";
 @import "sidebar_nav";
 @import url('https://fonts.googleapis.com/css?family=Cinzel');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|Philosopher');
 .URL {
   overflow: hidden;
   // width: 75%;
@@ -13,26 +14,31 @@
 }
 body {
   background-color: $gray;
-  // font-family: 'Cinzel', serif !important;
   color: $gold_alt_1;
+  font-family: 'Philosopher', sans-serif;
 }
 .container-fluid {
   padding-left: 0; //this locks the sidebar nav against the left side
 }
 .page_content {
   background-color: rgba($gray_alt_2, .5);
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, .7);
+  box-shadow: $box_shadow_default;
   padding-top: 10px;
   overflow: auto;
 }
 table {
   color: $gold_alt_1;
+  margin-top: 30px;
   th{
     color: $gold_alt_2;
     text-shadow: $text_shadow_default;
     text-align: center;
     border-color: $red !important;
     font-family: 'Cinzel', serif !important;
+    font-size: 1.2em;
+  }
+  #header_row:hover {
+    background-color: transparent !important;
   }
   td {
     text-align: center;
@@ -44,15 +50,55 @@ table {
     color: rgba($gold_alt_3, 1);
   }
 }
-#search_box {
-  background-color: black;
+.search_box {
+  background-color: transparent;
   border: none;
   border-radius: 0px;
-  border-bottom: 1px solid gray;
-  color: #B1810B;
+  border-bottom: 1px solid $red;
+  box-shadow: none !important;
+  color: $gold_alt_1;
+  float:right;
+  width: 90%;
+  text-shadow: $text_shadow_default;
+}
+.search_box:focus {
+  border-bottom: 1px solid $red;
 }
 #search_button {
-  color: gray;
-  background-color: black;
-  float: left;
+  margin-top: 10px;
+}
+.buttons {
+  margin-top: 10px;
+}
+._button {
+  border: 1px solid $red;
+  padding: 10px 15px;
+  color: $gold_alt_1;
+  text-decoration: none;
+  background-color: $gray;
+  text-shadow: $text_shadow_default;
+}
+._button:hover {
+  color: $gold_alt_2;
+  text-decoration: none;
+  background-color: $gray_alt_2;
+}
+input::-webkit-input-placeholder {
+color: $gold !important;
+text-shadow: $text_shadow_alt_1;
+}
+
+input:-moz-placeholder { /* Firefox 18- */
+color: $gold !important;
+text-shadow: $text_shadow_alt_1;
+}
+
+input::-moz-placeholder {  /* Firefox 19+ */
+color: $gold !important;
+text-shadow: $text_shadow_alt_1;
+}
+
+input:-ms-input-placeholder {
+color: $gold !important;
+text-shadow: $text_shadow_alt_1;
 }
