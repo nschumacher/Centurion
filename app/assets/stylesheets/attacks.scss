@@ -57,8 +57,8 @@ table {
   border-bottom: 1px solid $red;
   box-shadow: none !important;
   color: $gold_alt_1;
-  float:right;
-  width: 90%;
+  float:right !important;
+  width: 90% !important;
   text-shadow: $text_shadow_default;
 }
 .search_box:focus {
@@ -66,6 +66,8 @@ table {
 }
 #search_button {
   margin-top: 10px;
+  background: transparent;
+  border: none;
 }
 .buttons {
   margin-top: 10px;

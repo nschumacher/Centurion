@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :attacks
+  resources :attacks do
+    collection do
+      get 'search'
+    end
+  end
   get 'pages/about'
 
   get 'pages/contact'
