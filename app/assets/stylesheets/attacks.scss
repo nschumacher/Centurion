@@ -83,6 +83,18 @@ table {
   text-decoration: none;
   background-color: $gray_alt_2;
 }
+.pagination {
+  .current {
+    color: $gold_alt_2;
+    font-size: 1.2em;
+    padding: 3px;
+    text-shadow: $text_shadow_default;
+  }
+  a{
+    color: $red_alt_2;
+    text-shadow: $text_shadow_default;
+  }
+}
 input::-webkit-input-placeholder {
 color: $gold !important;
 text-shadow: $text_shadow_alt_1;
