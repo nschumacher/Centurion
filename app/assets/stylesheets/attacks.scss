@@ -5,6 +5,7 @@
 @import "sidebar_nav";
 @import url('https://fonts.googleapis.com/css?family=Cinzel');
 @import url('https://fonts.googleapis.com/css?family=PT+Sans|Philosopher');
+
 .URL {
   overflow: hidden;
   // width: 75%;
@@ -12,10 +13,16 @@
 .URL:hover {
   overflow: auto;
 }
-body {
-  background-color: $gray;
+.all_content {
+  background: $gray; /* For browsers that do not support gradients */
   color: $gold_alt_1;
   font-family: 'Philosopher', sans-serif;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background: -webkit-linear-gradient(top, $gray,  $gray_alt_1, $gray); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom, $gray,  $gray_alt_1, $gray); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom, $gray,  $gray_alt_1, $gray); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom, $gray,  $gray_alt_1, $gray); /* Standard syntax (must be last) */
 }
 .container-fluid {
   padding-left: 0; //this locks the sidebar nav against the left side
@@ -86,6 +93,7 @@ table {
   background-color: $gray_alt_2;
 }
 .pagination {
+  margin-top: 0px;
   .current {
     color: $gold_alt_2;
     font-size: 1.2em;
