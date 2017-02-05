@@ -34,29 +34,19 @@
             <th><div align="center" style="width:100%">Url</div></th>
             <th>Case ID</th>
             <th>Target</th>
-            <!-- <th>Attack type</th> -->
             <th>Detection Time</th>
-            <!-- <th>Detection Method</th> -->
-            <!-- <th>Notes</th> -->
-            <!-- <th colspan="3"></th> -->
           </tr>
         </thead>
 
         <tbody>
           <% @attacks.each do |attack| %>
-            <tr>
-              <td><%= attack.status %></td>
-              <td align="center"><div class="URL" align="center"><%= attack.url %></div></td>
-              <td><%= attack.case_id %></td>
-              <td><%= attack.client %></td>
-              <!-- <td><%#= attack.attack_type %></td> -->
-              <td><%= attack.detection_time %></td>
-              <!-- <td><%#= attack.detection_method %></td> -->
-              <!-- <td><%#= attack.notes %></td> -->
-              <!-- <td><%#= link_to 'Show', attack %></td>
-              <td><%#= link_to 'Edit', edit_attack_path(attack) %></td>
-              <td><%#= link_to 'Destroy', attack, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
-            </tr>
+              <tr class='clickable-row' data-href='/attacks/<%=attack.id%>'>
+                <td><%= attack.status %></td></a>
+                <td align="center"><div class="URL" align="center"><%= attack.url %></div></td>
+                <td><%= attack.case_id %></td>
+                <td><%= attack.client %></td>
+                <td><%= attack.detection_time %></td>
+              </tr>
           <% end %>
         </tbody>
       </table>
@@ -64,3 +54,12 @@
       <%= will_paginate @posts %>
     </div>
   </div>
+
+<script>
+  // makes the table rows clickable
+  jQuery(document).ready(function($) {
+      $(".clickable-row").click(function() {
+          window.document.location = $(this).data("href");
+      });
+  });
+</script>
