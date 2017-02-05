@@ -4,7 +4,7 @@ class AttacksController < ApplicationController
   # GET /attacks
   # GET /attacks.json
   def index
-    @attacks = Attack.all
+    @attacks = Attack.paginate(:page => params[:page], :per_page => 14)
   end
 
   # GET /attacks/1
