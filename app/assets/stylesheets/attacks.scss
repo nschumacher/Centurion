@@ -14,15 +14,15 @@
   overflow: auto;
 }
 .all_content {
-  background: $gray; /* For browsers that do not support gradients */
+  background: $dark; /* For browsers that do not support gradients */
   color: $gold_alt_1;
   font-family: 'Philosopher', sans-serif;
   background-size: contain;
   background-repeat: no-repeat;
-  background: -webkit-linear-gradient(top, $gray,  $gray_alt_1, $gray); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom, $gray,  $gray_alt_1, $gray); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom, $gray,  $gray_alt_1, $gray); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom, $gray,  $gray_alt_1, $gray); /* Standard syntax (must be last) */
+  background: -webkit-linear-gradient(top, $dark,  $dark_alt_1, $dark); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom, $dark,  $dark_alt_1, $dark); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom, $dark,  $dark_alt_1, $dark); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom, $dark,  $dark_alt_1, $dark); /* Standard syntax (must be last) */
 }
 .container-fluid {
   padding-left: 0; //this locks the sidebar nav against the left side
@@ -30,12 +30,17 @@
 .page_content {
   background-color: rgba($gray_alt_2, .5);
   box-shadow: $box_shadow_default;
+  text-shadow: $text_shadow_default;
   padding-top: 10px;
   overflow: auto;
+  margin-right: 2px;
+  margin-bottom: 3px;
+  padding: 15px 15px 0px 15px;
 }
 table {
   color: $gold_alt_1;
   margin-top: 30px;
+  margin-bottom: 5px;
   th{
     color: $gold_alt_2;
     text-shadow: $text_shadow_default;
@@ -65,7 +70,7 @@ table {
   box-shadow: none !important;
   color: $gold_alt_1;
   float:right !important;
-  width: 90% !important;
+  width: 85% !important;
   text-shadow: $text_shadow_default;
 }
 .search_box:focus {
@@ -94,6 +99,7 @@ table {
 }
 .pagination {
   margin-top: 0px;
+  margin-bottom: 5px;
   .current {
     color: $gold_alt_2;
     font-size: 1.2em;
@@ -104,6 +110,35 @@ table {
     color: $red_alt_2;
     text-shadow: $text_shadow_default;
   }
+}
+.breadcrumb {
+  li + li:before {
+    color: $red_alt_1;
+    text-shadow: $text_shadow_default;
+  }
+  .active {
+    color: $gold_alt_1;
+    text-shadow: $text_shadow_default;
+  }
+  a{
+    color: $gold;
+    text-shadow: $text_shadow_default;
+  }
+  a:hover {
+    text-decoration: none;
+    color: $gold_alt_2;
+  }
+  background: transparent;
+  margin-left: 5px;
+}
+// -------------------- Show page -------------------- //
+.status_img {
+  height: 80px;
+  border: 1px solid $red;
+  padding: 10px;
+}
+#url_box {
+  margin-top: 22px;
 }
 input::-webkit-input-placeholder {
 color: $gold !important;
