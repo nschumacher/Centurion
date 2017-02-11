@@ -20,6 +20,9 @@ class AttacksController < ApplicationController
   # GET /attacks/1
   # GET /attacks/1.json
   def show
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /attacks/new

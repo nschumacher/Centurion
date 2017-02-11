@@ -10,7 +10,7 @@
   </div>
 
   <div class="col-xs-9 col-sm-10">
-    <div class="page_content">
+    <div class="page_content" id="page_content">
       <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-4 buttons">
           <a class="_button" href="#" role="button">Check Status</a>
@@ -37,8 +37,9 @@
 
         <tbody>
           <% @attacks.each do |attack| %>
-              <tr class='clickable-row' data-href='/attacks/<%=attack.id%>'>
-                <td><%= attack.status %></td></a>
+              <!-- <tr class='clickable-row' data-href='/attacks/<%=attack.id%>'> -->
+              <tr>
+                <td><%= attack.status %> <%= link_to 'Show', attack_path(:id => attack.id), :remote => true %></td></a>
                 <td align="center"><div class="URL" align="center"><%= attack.url %></div></td>
                 <td><%= attack.case_id %></td>
                 <td><%= attack.client %></td>
