@@ -4,12 +4,25 @@ class AttacksController < ApplicationController
   # GET /attacks
   # GET /attacks.json
   def index
-    @attacks = Attack.all
+    @attacks = Attack.paginate(:page => params[:page], :per_page => 14)
   end
+
+  # Searching for attacks
+  def search
+    if params[:search].present?
+        @attacks = Attack.search(params[:search], page: params[:page], per_page: 14)
+    else
+      @attacks = nil
+    end
+  end
+
 
   # GET /attacks/1
   # GET /attacks/1.json
   def show
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /attacks/new
