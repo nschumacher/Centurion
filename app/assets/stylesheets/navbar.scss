@@ -1,15 +1,29 @@
 @import "color_palette";
 @import url('https://fonts.googleapis.com/css?family=Cinzel');
+
 .navbar {
-  background-color: $gray;
+  background: transparent;
   border-radius: 0;
   border: none;
-  margin-bottom: 0px;
+  margin-bottom: 15px;
+  margin-top: 5px;
 
   a{
     color: $gold_alt_1 !important;
     text-shadow: $text_shadow_default;
     font-family: 'Cinzel', serif !important;
   }
-  // box-shadow: $box_shadow_default;
+}
+#app_title_logo {
+  height:60px;
+  margin-top: -20px;
+  padding-top: 0px;
+}
+#app_title_link {
+  width: 350px;
+  padding-top: 20px;
+}
+#app_title_text {
+  font-size: 1.8em;
+  padding-top: 20px;
 }

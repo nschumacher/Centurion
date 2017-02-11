@@ -22,3 +22,4 @@
 
 *.cache
 .DS_Store
+Gemfile.Lock

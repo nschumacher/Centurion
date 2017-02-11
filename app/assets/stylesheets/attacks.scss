@@ -5,6 +5,7 @@
 @import "sidebar_nav";
 @import url('https://fonts.googleapis.com/css?family=Cinzel');
 @import url('https://fonts.googleapis.com/css?family=PT+Sans|Philosopher');
+
 .URL {
   overflow: hidden;
   // width: 75%;
@@ -12,10 +13,16 @@
 .URL:hover {
   overflow: auto;
 }
-body {
-  background-color: $gray;
+.all_content {
+  background: $dark; /* For browsers that do not support gradients */
   color: $gold_alt_1;
   font-family: 'Philosopher', sans-serif;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background: -webkit-linear-gradient(top, $dark,  $dark_alt_1, $dark); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom, $dark,  $dark_alt_1, $dark); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom, $dark,  $dark_alt_1, $dark); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom, $dark,  $dark_alt_1, $dark); /* Standard syntax (must be last) */
 }
 .container-fluid {
   padding-left: 0; //this locks the sidebar nav against the left side
@@ -23,12 +30,17 @@ body {
 .page_content {
   background-color: rgba($gray_alt_2, .5);
   box-shadow: $box_shadow_default;
+  text-shadow: $text_shadow_default;
   padding-top: 10px;
   overflow: auto;
+  margin-right: 2px;
+  margin-bottom: 3px;
+  padding: 15px 15px 0px 15px;
 }
 table {
   color: $gold_alt_1;
   margin-top: 30px;
+  margin-bottom: 5px;
   th{
     color: $gold_alt_2;
     text-shadow: $text_shadow_default;
@@ -57,8 +69,8 @@ table {
   border-bottom: 1px solid $red;
   box-shadow: none !important;
   color: $gold_alt_1;
-  float:right;
-  width: 90%;
+  float:right !important;
+  width: 85% !important;
   text-shadow: $text_shadow_default;
 }
 .search_box:focus {
@@ -66,6 +78,8 @@ table {
 }
 #search_button {
   margin-top: 10px;
+  background: transparent;
+  border: none;
 }
 .buttons {
   margin-top: 10px;
@@ -82,6 +96,84 @@ table {
   color: $gold_alt_2;
   text-decoration: none;
   background-color: $gray_alt_2;
+}
+.pagination {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  .current {
+    color: $gold_alt_2;
+    font-size: 1.2em;
+    padding: 3px;
+    text-shadow: $text_shadow_default;
+  }
+  a{
+    color: $red_alt_2;
+    text-shadow: $text_shadow_default;
+  }
+}
+.breadcrumb {
+  li + li:before {
+    color: $red_alt_1;
+    text-shadow: $text_shadow_default;
+  }
+  .active {
+    color: $gold_alt_1;
+    text-shadow: $text_shadow_default;
+  }
+  a{
+    color: $gold;
+    text-shadow: $text_shadow_default;
+  }
+  a:hover {
+    text-decoration: none;
+    color: $gold_alt_2;
+  }
+  background: transparent;
+  margin-left: 5px;
+}
+// -------------------- Show page -------------------- //
+.status_img {
+  height: 60px;
+  border: 1px solid $red;
+  padding: 10px;
+  float: left;
+}
+#url_box {
+  margin-top: 22px;
+}
+.well {
+  background: $dark;
+  margin: 0px;
+  border: 1px solid $red;
+  padding: 8px;
+  margin-bottom: 4px;
+}
+.well2 {
+  background: $dark;
+  margin: 0px;
+  border: 1px solid $gold;
+  padding: 8px;
+  margin-bottom: 4px;
+}
+.site_traffic_box {
+  height: 175px;
+  border: 1px solid $gold;
+}
+._button2 {
+  border: 1px solid $gold;
+  padding: 10px 15px;
+  color: $gold_alt_1;
+  text-decoration: none;
+  background-color: $gray;
+  text-shadow: $text_shadow_default;
+}
+._button2:hover {
+  color: $gold_alt_2;
+  text-decoration: none;
+  background-color: $gray_alt_2;
+}
+.info {
+  color: $gold_alt_3;
 }
 input::-webkit-input-placeholder {
 color: $gold !important;
