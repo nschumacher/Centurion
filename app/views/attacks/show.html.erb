@@ -3,7 +3,7 @@
 <div class="row">
   <ol class="breadcrumb">
     <li><a href="/">Dashboard</a></li>
-    <li><a href="#">Case ID: <%= @attack.case_id %></a></li>
+    <li>Case ID: <%= @attack.case_id %></li>
     <li class="active">Attack ID: <%= @attack.case_id %></li>
   </ol>
   <div class="col-xs-3 col-sm-2">
@@ -20,51 +20,97 @@
       <div class="row">
         <div class="col-xs-4" id="status_box">
           <img src="/assets/green_check.png" alt="OK" class="img-circle status_img">
-          <span style="margin-left:10px; font-size:1.5em">Status: <%= @attack.status %></span>
+          <span style="margin-left:10px; font-size:1.2em">Status: <span class="info"><%= @attack.status %></span></span><br>
+          <span style="margin-left:10px; font-size:.7em">Last check: <span class="info">7FEB2017</span></span>
         </div>
         <div class="col-xs-8" id="url_box">
-          <span style="font-size:1.5em">Url: <%= @attack.url %></span>
+          <span style="font-size:1.2em">URL: <%= @attack.url %></span>
         </div>
       </div>
 
       <!-- Site Traffic & Some Details -->
-      <div class="row">
-        <div class="col-xs-12 col-sm-5" style="height: 150px">
-          <div style="height: 150px; background-color: #202020">
+      <div class="row" style="font-size: 1.2em; margin-top: 20px">
+        <div class="col-xs-12 col-sm-5">
+          <div class="site_traffic_box well">
             site traffice box
           </div>
         </div>
         <div class="col-xs-12 col-sm-7">
           <div class="row">
             <div class="col-xs-6">
-              Attack ID: <%= @attack.case_id %>
+              <div class="info_box well">
+                Attack ID: <%= @attack.case_id %>
+              </div>
             </div>
             <div class="col-xs-6">
-              Date Recorded: <%= @attack.detection_time %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">
-              Domain: test.com
-            </div>
-            <div class="col-xs-6">
-              Last Status Check: <%= @attack.detection_time %>
+              <div class="info_box well">
+                Date Recorded: <%= @attack.detection_time %>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-6">
-              Registration Date: 04JUL2016
+              <div class="info_box well">
+                Domain: test.com
+              </div>
             </div>
             <div class="col-xs-6">
-              Expiry Date: 04JUL2017
+              <div class="info_box well">
+                Last Status Check: <%= @attack.detection_time %>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-6">
-              Target: <%= @attack.client %>
+              <div class="info_box well">
+                Registration Date: 04JUL2016
+              </div>
             </div>
             <div class="col-xs-6">
-              Function: first page
+              <div class="info_box well">
+                Expiry Date: 04JUL2017
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="info_box well">
+                Target: <%= @attack.client %>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div class="info_box well">
+                Function: first page
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="font-size: 1.2em">
+        <div class="col-xs-12 col-sm-5">
+          <div class="site_traffic_box well">
+            site traffice box
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-7">
+          <div class="_button2" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Advanced...
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-7 collapse" id="collapseExample">
+          <div class="well2">
+            <div class="row">
+              <div class="col-xs-6">
+                <div class="info_box well">
+                  Target: <%= @attack.client %>
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <div class="info_box well">
+                  Function: first page
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -133,12 +133,47 @@ table {
 }
 // -------------------- Show page -------------------- //
 .status_img {
-  height: 80px;
+  height: 60px;
   border: 1px solid $red;
   padding: 10px;
+  float: left;
 }
 #url_box {
   margin-top: 22px;
+}
+.well {
+  background: $dark;
+  margin: 0px;
+  border: 1px solid $red;
+  padding: 8px;
+  margin-bottom: 4px;
+}
+.well2 {
+  background: $dark;
+  margin: 0px;
+  border: 1px solid $gold;
+  padding: 8px;
+  margin-bottom: 4px;
+}
+.site_traffic_box {
+  height: 175px;
+  border: 1px solid $gold;
+}
+._button2 {
+  border: 1px solid $gold;
+  padding: 10px 15px;
+  color: $gold_alt_1;
+  text-decoration: none;
+  background-color: $gray;
+  text-shadow: $text_shadow_default;
+}
+._button2:hover {
+  color: $gold_alt_2;
+  text-decoration: none;
+  background-color: $gray_alt_2;
+}
+.info {
+  color: $gold_alt_3;
 }
 input::-webkit-input-placeholder {
 color: $gold !important;
