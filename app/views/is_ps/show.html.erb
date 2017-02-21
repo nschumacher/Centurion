@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @isp.name %>
+</p>
+
+<p>
+  <strong>Attackid:</strong>
+  <%= @isp.attackID %>
+</p>
+
+<%= link_to 'Edit', edit_isp_path(@isp) %> |
+<%= link_to 'Back', isps_path %>

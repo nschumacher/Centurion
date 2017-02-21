@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @registrar.name %>
+</p>
+
+<p>
+  <strong>Attackid:</strong>
+  <%= @registrar.attackID %>
+</p>
+
+<%= link_to 'Edit', edit_registrar_path(@registrar) %> |
+<%= link_to 'Back', registrars_path %>
