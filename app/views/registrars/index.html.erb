@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Registrars</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Attackid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @registrars.each do |registrar| %>
+      <tr>
+        <td><%= registrar.name %></td>
+        <td><%= registrar.attackID %></td>
+        <td><%= link_to 'Show', registrar %></td>
+        <td><%= link_to 'Edit', edit_registrar_path(registrar) %></td>
+        <td><%= link_to 'Destroy', registrar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Registrar', new_registrar_path %>

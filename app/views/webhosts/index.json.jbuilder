@@ -1,0 +1,1 @@
+json.array! @webhosts, partial: 'webhosts/webhost', as: :webhost

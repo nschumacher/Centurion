@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  caseID: MyString
+  attackID: MyString
+  target: MyString
+
+two:
+  caseID: MyString
+  attackID: MyString
+  target: MyString

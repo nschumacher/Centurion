@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :webhosts
+  resources :isps
+  resources :registrars
+  resources :cases
   devise_for :users
   resources :attacks do
     collection do
