@@ -1,0 +1,1 @@
+json.partial! "webhosts/webhost", webhost: @webhost
