@@ -5,6 +5,12 @@ class AttacksController < ApplicationController
   # GET /attacks.json
   def index
     @attacks = Attack.paginate(:page => params[:page], :per_page => 14)
+
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # Searching for attacks
@@ -14,6 +20,12 @@ class AttacksController < ApplicationController
     else
       @attacks = nil
     end
+
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
 
@@ -22,22 +34,38 @@ class AttacksController < ApplicationController
   def show
     respond_to do |format|
       format.js
+      format.html
     end
   end
 
   # GET /attacks/new
   def new
     @attack = Attack.new
+
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /attacks/1/edit
   def edit
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # POST /attacks
   # POST /attacks.json
   def create
     @attack = Attack.new(attack_params)
+    @case = Case.new(params[:caseID])
+    @case.attackID = @attack.attackID
+    @case.caseID = @attack.caseID
+    @case.target = @attack.target
 
     respond_to do |format|
       if @attack.save
