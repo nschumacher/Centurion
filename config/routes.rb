@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   end
   get 'pages/about'
 
-  get 'pages/contact'
+  #get 'pages/contact'
+
+  get 'pages/contact', to: 'messages#new', as: 'contact'
+  post 'pages/contact', to: 'messages#create'
 
   root 'attacks#index'
   # The priority is based upon order of creation: first created -> highest priority.
