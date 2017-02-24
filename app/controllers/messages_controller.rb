@@ -1,6 +1,10 @@
 class MessagesController < ApplicationController
 	def new
 		@message = Message.new
+		respond_to do | format | 
+			format.js
+			format.html
+		end
 	end
 
 	def create
@@ -12,6 +16,11 @@ class MessagesController < ApplicationController
 		else
 			flash[:alert] = "An error occurred while delivering this message."
 			render :new
+		end
+
+		respond_to do | format | 
+			format.js
+			format.html
 		end
 	end
 
