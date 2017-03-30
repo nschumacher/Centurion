@@ -7,6 +7,8 @@ class Attack < ActiveRecord::Base
   has_many :registrars
   has_many :webhosts
 
+  accepts_nested_attributes_for :case
+
   # set keys
   #self.primary_key = 'attackID'
 

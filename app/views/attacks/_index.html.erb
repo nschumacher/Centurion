@@ -29,7 +29,7 @@
           <tr id="header_row">
             <th>Status</th>
             <th><div align="center" style="width:100%">Url</div></th>
-            <th>Case ID</th>
+            <th>Attack ID</th>
             <th>Target</th>
             <th>Detection Time</th>
           </tr>
@@ -41,7 +41,7 @@
               <tr>
                 <td><%= attack.status %> <%= link_to 'Show', attack_path(:id => attack.id), :remote => true %></td></a>
                 <td align="center"><div class="URL" align="center"><%= attack.url %></div></td>
-                <td><%= attack.caseID %></td>
+                <td><%= attack.attackID %></td>
                 <td><%= attack.target %></td>
                 <td><%= attack.registrationDate %></td>
               </tr>

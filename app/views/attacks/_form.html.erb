@@ -11,34 +11,39 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :"Attack" %> <%= f.label :"Status" %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :"Case" %> <%= f.label :"ID", style:"text-transform: uppercase" %><br>
-    <%= f.text_field :caseID %>
-  </div>
-  <div class="field">
-    <%= f.label :"Attack" %> <%= f.label :"ID", style:"text-transform: uppercase" %><br>
-    <%= f.text_field :attackID %>
-  </div>
-  <div class="field">
-    <%= f.label :target %><br>
-    <%= f.text_field :target %>
-  </div>
-  <div class="field">
-    <%= f.label :functionality %><br>
-    <%= f.text_field :functionality %>
-  </div>
+  <!-- <div class="field">
+    <%#= f.label :"Attack" %> <%= f.label :"Status" %><br>
+    <%#= f.text_field :status %>
+  </div> -->
+  <!-- <div class="field">
+    <%#= f.label :"Case" %> <%#= f.label :"ID", style:"text-transform: uppercase" %><br>
+    <%#= f.text_field :caseID %>
+  </div> -->
+  <h1>
+    <%= @lastAttackID %>
+    <%= @myURL %>
+  </h1>
+
+  <%= f.hidden_field :attackID, :value => @lastAttackID %>
+
   <div class="field">
     <%= f.label :url %><br>
     <%= f.text_field :url %>
   </div>
   <div class="field">
-    <%= f.label :registrationDate %><br>
-    <%= f.text_field :registrationDate %>
+    <%= f.label :functionality %><br>
+    <%#= f.text_field :functionality %>
+    <%= f.select :functionality, options_for_select([['Landing Page'], ['Redirection'], ['Drop Point'], ['Secondary Attack Page']])%>
   </div>
+  <div class="field">
+    <%= f.label :target %><br>
+    <%= f.text_field :target %>
+  </div>
+
+  <!-- <div class="field">
+    <%#= f.label :registrationDate %><br>
+    <%#= f.text_field :registrationDate %>
+  </div> -->
   <div class="field">
     <%= f.label :notes %><br>
     <%= f.text_field :notes %>
