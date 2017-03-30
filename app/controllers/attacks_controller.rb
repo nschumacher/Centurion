@@ -5,6 +5,12 @@ class AttacksController < ApplicationController
   # GET /attacks.json
   def index
     @attacks = Attack.paginate(:page => params[:page], :per_page => 14)
+
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # Searching for attacks
@@ -14,6 +20,12 @@ class AttacksController < ApplicationController
     else
       @attacks = nil
     end
+
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
 
@@ -22,22 +34,49 @@ class AttacksController < ApplicationController
   def show
     respond_to do |format|
       format.js
+      format.html
     end
   end
 
   # GET /attacks/new
   def new
+    @lastAttackID = Attack.order("created_at").last.attackID
+    @lastAttackID[0]=""
+    @lastAttackID[0]=""
+    @lastAttackID = @lastAttackID.to_i
+    @lastAttackID = @lastAttackID + 1
+    @lastAttackID.to_s
+    @lastAttackID = "AX#{@lastAttackID}"
+    @myURL = params[:url]
+    # here is where the code will go to check it's status and grab the whois and such
+
     @attack = Attack.new
+    # @case = Case.new
+
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /attacks/1/edit
   def edit
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # POST /attacks
   # POST /attacks.json
   def create
     @attack = Attack.new(attack_params)
+    # @case = Case.new(params[:caseID])
+    # @case.attackID = @attack.attackID
+    # @case.caseID = @attack.caseID
+    # @case.target = @attack.target
 
     respond_to do |format|
       if @attack.save
@@ -82,6 +121,6 @@ class AttacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attack_params
-      params.require(:attack).permit(:status, :case_id, :client, :attack_type, :url, :detection_time, :detection_method, :notes)
+      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate, :notes)
     end
 end
