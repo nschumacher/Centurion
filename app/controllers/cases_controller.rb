@@ -5,11 +5,22 @@ class CasesController < ApplicationController
   # GET /cases.json
   def index
     @cases = Case.all
+
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /cases/1
   # GET /cases/1.json
   def show
+    # allow for ajax
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /cases/new

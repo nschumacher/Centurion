@@ -11,33 +11,25 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :"Attack" %> <%= f.label :"Status" %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :"Case" %> <%= f.label :"ID", style:"text-transform: uppercase" %><br>
-    <%= f.text_field :case_id %>
-  </div>
-  <div class="field">
-    <%= f.label :client %><br>
-    <%= f.text_field :client %>
-  </div>
-  <div class="field">
-    <%= f.label :attack_type %><br>
-    <%= f.text_field :attack_type %>
-  </div>
+  <h1>
+    <%= @lastAttackID %>
+    <%= @myURL %>
+  </h1>
+
+  <%= f.hidden_field :attackID, :value => @lastAttackID %>
+
   <div class="field">
     <%= f.label :url %><br>
     <%= f.text_field :url %>
   </div>
   <div class="field">
-    <%= f.label :detection_time %><br>
-    <%= f.text_field :detection_time %>
+    <%= f.label :functionality %><br>
+    <%#= f.text_field :functionality %>
+    <%= f.select :functionality, options_for_select([['Landing Page'], ['Redirection'], ['Drop Point'], ['Secondary Attack Page']])%>
   </div>
   <div class="field">
-    <%= f.label :detection_method %><br>
-    <%= f.text_field :detection_method %>
+    <%= f.label :target %><br>
+    <%= f.text_field :target %>
   </div>
   <div class="field">
     <%= f.label :notes %><br>

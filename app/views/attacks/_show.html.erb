@@ -7,8 +7,8 @@
     <div class="page_content" id="page_content"> -->
       <ol class="breadcrumb">
         <li><a href="/">Dashboard</a></li>
-        <li>Case ID: <%= @attack.case_id %></li>
-        <li class="active">Attack ID: <%= @attack.case_id %></li>
+        <!-- <li>Case ID: <%= @attack.caseID %></li> -->
+        <li class="active">Attack ID: <%= @attack.attackID %></li>
       </ol>
       <!-- Status and URL -->
       <div class="row">
@@ -16,6 +16,7 @@
           <img src="/assets/green_check.png" alt="OK" class="img-circle status_img">
           <span style="margin-left:10px; font-size:1.2em">Status: <span class="info"><%= @attack.status %></span></span><br>
           <span style="margin-left:10px; font-size:.7em">Last check: <span class="info">7FEB2017</span></span>
+          <%#= link_to 'Update Status', update_status_attacks_path(@attack.url) %>
         </div>
         <div class="col-xs-8" id="url_box">
           <span style="font-size:1.2em">URL: <%= @attack.url %></span>
@@ -33,48 +34,48 @@
           <div class="row">
             <div class="col-xs-6">
               <div class="info_box well">
-                Attack ID: <%= @attack.case_id %>
+                Attack ID: <%= @attack.attackID %>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Date Recorded: <%= @attack.detection_time %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">
-              <div class="info_box well">
-                Domain: test.com
-              </div>
-            </div>
-            <div class="col-xs-6">
-              <div class="info_box well">
-                Last Status Check: <%= @attack.detection_time %>
+                Date Recorded: <%= @attack.created_at %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-6">
               <div class="info_box well">
-                Registration Date: 04JUL2016
+                Domain: <%= @attack.domain %>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Expiry Date: 04JUL2017
+                Last Status Check: <%= @attack.registrationDate %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-6">
               <div class="info_box well">
-                Target: <%= @attack.client %>
+                Registration Date: <%= @attack.registrationDate %>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Function: first page
+                Expiry Date: <%= @attack.expireryDate %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="info_box well">
+                Target: <%= @attack.target %>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div class="info_box well">
+                Function: <%= @attack.functionality %>
               </div>
             </div>
           </div>
@@ -84,7 +85,7 @@
       <div class="row" style="font-size: 1.2em">
         <div class="col-xs-12 col-sm-5">
           <div class="site_traffic_box well">
-            site traffice box
+            Location box
           </div>
         </div>
         <div class="col-xs-12 col-sm-7">
@@ -97,12 +98,12 @@
             <div class="row">
               <div class="col-xs-6">
                 <div class="info_box well">
-                  Target: <%= @attack.client %>
+                  Target: <%= @attack.target %>
                 </div>
               </div>
               <div class="col-xs-6">
                 <div class="info_box well">
-                  Function: first page
+                  Function: <%= @attack.functionality %>
                 </div>
               </div>
             </div>
@@ -121,7 +122,7 @@
       <strong>Notes:</strong>
       <%= @attack.notes %>
 
-      <%= link_to 'Edit', edit_attack_path(@attack) %> |
+      <%= link_to 'Edit', edit_attack_path(@attack), :remote => true %> |
       <%= link_to 'Back', attacks_path %>
     <!--</div>
     </div>
