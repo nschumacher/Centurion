@@ -1,6 +1,7 @@
 class AttacksController < ApplicationController
   before_action :set_attack, only: [:show, :edit, :update, :destroy]
 
+
   # GET /attacks
   # GET /attacks.json
   def index
@@ -19,11 +20,11 @@ class AttacksController < ApplicationController
 
   # GET /attacks/1
   # GET /attacks/1.json
-  def show
-    respond_to do |format|
-      format.js
-    end
-  end
+  #def show
+  #  respond_to do |format|
+  #    format.js
+  #  end
+  #end
 
   # GET /attacks/new
   def new
@@ -41,6 +42,7 @@ class AttacksController < ApplicationController
 
     respond_to do |format|
       if @attack.save
+        @attack.screenshot
         format.html { redirect_to @attack, notice: 'Attack was successfully created.' }
         format.json { render :show, status: :created, location: @attack }
       else

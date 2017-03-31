@@ -18,6 +18,8 @@ gem 'will_paginate', '~> 3.1.0'
 # Searchkick for searching
 gem 'searchkick'
 
+gem 'screencap'
+
 # User profiles
 gem 'devise'
 

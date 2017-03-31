@@ -1,4 +1,4 @@
-<!-- <p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></p>
 
 <div class="row">
 
@@ -7,8 +7,8 @@
     <div class="page_content" id="page_content"> -->
       <ol class="breadcrumb">
         <li><a href="/">Dashboard</a></li>
-        <li>Case ID: <%= @attack.case_id %></li>
-        <li class="active">Attack ID: <%= @attack.case_id %></li>
+        <li>Case ID: <%= @attack.caseID %></li>
+        <li class="active">Attack ID: <%= @attack.caseID %></li>
       </ol>
       <!-- Status and URL -->
       <div class="row">
@@ -33,12 +33,12 @@
           <div class="row">
             <div class="col-xs-6">
               <div class="info_box well">
-                Attack ID: <%= @attack.case_id %>
+                Attack ID: <%= @attack.caseID %>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Date Recorded: <%= @attack.detection_time %>
+                Registration Date: <%= @attack.registrationDate %>
               </div>
             </div>
           </div>
@@ -46,11 +46,6 @@
             <div class="col-xs-6">
               <div class="info_box well">
                 Domain: test.com
-              </div>
-            </div>
-            <div class="col-xs-6">
-              <div class="info_box well">
-                Last Status Check: <%= @attack.detection_time %>
               </div>
             </div>
           </div>
@@ -67,11 +62,6 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-6">
-              <div class="info_box well">
-                Target: <%= @attack.client %>
-              </div>
-            </div>
             <div class="col-xs-6">
               <div class="info_box well">
                 Function: first page
@@ -95,11 +85,6 @@
         <div class="col-xs-12 col-sm-7 collapse" id="collapseExample">
           <div class="well2">
             <div class="row">
-              <div class="col-xs-6">
-                <div class="info_box well">
-                  Target: <%= @attack.client %>
-                </div>
-              </div>
               <div class="col-xs-6">
                 <div class="info_box well">
                   Function: first page
