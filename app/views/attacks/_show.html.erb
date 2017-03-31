@@ -16,6 +16,7 @@
           <img src="/assets/green_check.png" alt="OK" class="img-circle status_img">
           <span style="margin-left:10px; font-size:1.2em">Status: <span class="info"><%= @attack.status %></span></span><br>
           <span style="margin-left:10px; font-size:.7em">Last check: <span class="info">7FEB2017</span></span>
+          <%#= link_to 'Update Status', update_status_attacks_path(@attack.url) %>
         </div>
         <div class="col-xs-8" id="url_box">
           <span style="font-size:1.2em">URL: <%= @attack.url %></span>
@@ -38,14 +39,14 @@
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Date Recorded: <%= @attack.registrationDate %>
+                Date Recorded: <%= @attack.created_at %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-6">
               <div class="info_box well">
-                Domain: test.com
+                Domain: <%= @attack.domain %>
               </div>
             </div>
             <div class="col-xs-6">
@@ -57,12 +58,12 @@
           <div class="row">
             <div class="col-xs-6">
               <div class="info_box well">
-                Registration Date: 04JUL2016
+                Registration Date: <%= @attack.registrationDate %>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Expiry Date: 04JUL2017
+                Expiry Date: <%= @attack.expireryDate %>
               </div>
             </div>
           </div>
@@ -74,7 +75,7 @@
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Function: first page
+                Function: <%= @attack.functionality %>
               </div>
             </div>
           </div>
@@ -84,7 +85,7 @@
       <div class="row" style="font-size: 1.2em">
         <div class="col-xs-12 col-sm-5">
           <div class="site_traffic_box well">
-            site traffice box
+            Location box
           </div>
         </div>
         <div class="col-xs-12 col-sm-7">
@@ -102,7 +103,7 @@
               </div>
               <div class="col-xs-6">
                 <div class="info_box well">
-                  Function: first page
+                  Function: <%= @attack.functionality %>
                 </div>
               </div>
             </div>
