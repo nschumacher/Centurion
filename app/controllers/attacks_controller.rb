@@ -81,19 +81,19 @@ class AttacksController < ApplicationController
     # Check the status
     status = check_url_status(myURL)
 
-    tempURL = myURL[7..-1]
+    myURL = myURL[7..-1]
 
     #### live here ####
-    @allWhois = "1\n"
+    @allWhois = "\n"
 
     # -- Domain -- #
     begin
-      mywhois = Whois.whois(tempURL)
+      mywhois = Whois.whois(myURL)
       p = mywhois.parser
       @dom = p.domain
-      @allWhois += "Domain:" + @dom +"\n"
+      @allWhois += "Domain:" + @dom +" \n"
     rescue
-      @dom = "\nDomain not retrieved\n"
+      @dom = "\nDomain not retrieved \n"
     else
     end
 
@@ -120,46 +120,77 @@ class AttacksController < ApplicationController
       #puts "\nDomain creation/expiration dates NA\n"
       @createdOn = "Creation date unavailable"
       @expiresOn = "Expiration date unavailable"
-      @allWhois += "Created On: "+ @createdOn.to_s + "\n" + "Expires On: " + @expiresOn.to_s + "\n"
+      @allWhois += "Created On: "+ @createdOn.to_s + " \n" + "Expires On: " + @expiresOn.to_s + " \n"
 
     else
-      @allWhois += "Created On: "+ @createdOn.to_s + "\n" + "Expires On: " + @expiresOn.to_s + "\n"
+      @allWhois += "Created On: "+ @createdOn.to_s + " \n" + "Expires On: " + @expiresOn.to_s + " \n"
       # puts "Creation date: #{@createdOn}"
       # puts "Expiration date: #{@expiresOn}"
     end
 
-    puts "\n\n"
-    puts @allWhois
-    puts "\n"
+    @allWhois += " \n"
+
+    # --- Registrant --- #
+    begin
+      rstStruct = p.registrant_contacts
+      rstName = rstStruct[0]['name']
+      rstOrg = rstStruct[0]['organization']
+      rstEmail = rstStruct[0]['email']
+    rescue
+      rstName = "Couldn't get registrant info"
+      @allWhois += rstName + " \n"
+    else
+      if rstName != nil
+        @allWhois += "Registrant Name: " + rstName + " \n"
+      else end
+      if rstOrg != nil
+        @allWhois += "Registrant Org: " + rstOrg + " \n"
+      else end
+      if rstEmail != nil
+        @allWhois += "Registrant Email: " + rstEmail + " \n"
+      else end
+      #puts @rstStruct
+    end
+
+    @allWhois += " \n"
 
     # --- Registrar --- #
     begin
       rarstruct = p.registrar
-      puts rarName = p.registrar['name']
-      puts rarOrg = p.registrar['organization']
-      puts rarID = p.registrar['id']
+      rarName = p.registrar['name']
+      rarOrg = p.registrar['organization']
+      rarID = p.registrar['id']
     rescue
       rarName = "Couldn't retrieve registrar info"
-      @allWhois += "Registrar Name: " + rarName + "\n"
+      @allWhois += "Registrar Name: " + rarName + " \n"
     else
       if rarName != nil
-        @allWhois += "Registrar Name: " + rarName + "\n"
+        @allWhois += "Registrar Name: " + rarName + " \n"
       else end
-#"\nRegistrar Org: " + rarOrg + "\nRegistrar ID: " + rarID +
-        #puts "Rar struct: #{@rarstruct} "
-        #puts "Rar name:   #{@rarName} "
-        #puts "Rar ID:     #{@rarID} "
-        #puts "Rar Org:    #{@rarOrg} "
-        #puts "\n"
+      if rarOrg != nil
+        @allWhois += "Registrar Org: " + rarOrg + " \n"
+      else end
+      if rarID != nil
+        @allWhois += "Registrar ID: " + rarID + " \n"
+      else end
     end
 
-    puts "\n\n"
-    puts @allWhois
-    puts "\n"
+    @allWhois += " \n"
+
+    # --- IP --- #
+    begin
+      ip = Resolv.getaddresses(myURL)
+    rescue
+      ip = "The IP broke Scottie! \n"
+      #@allWhois += ip
+    else
+      @allWhois += "IP Address: " + ip + " \n"
+    end
+
 
     # # --- ISP --- #
     # begin
-    #   networkWhois = Whois.whois(ip[0])
+    #   puts networkWhois = Whois.whois(ip[0])
     #   networkWhois = networkWhois.to_s
     # rescue
     #   puts "Couldn't retrieve Network whois"
@@ -171,30 +202,29 @@ class AttacksController < ApplicationController
     #   nni2 = temp.index(/\n/)
     #   nni2 = nni2+nni
     #   netName = networkWhois[nni..nni2]
-    # end
-    # --- IP --- #
-    # begin
-    #   ip = Resolv.getaddresses(myURL)
-    # rescue
-    #   puts = "\n\n The IP broke Scottie!\n"
-    # else
+    #   #puts "\nNetName: " + netName + "\n"
+    #
+    #   ###### NetHandle #######
+    #   nhi = @networkWhois.index(/NetHandle:/)
+    #   nhi = nhi+11
+    #   temp = @networkWhois[nhi..-1]
+    #   nhi2 = temp.index(/\n/)
+    #   nhi2 = nhi2 + nhi
+    #   @netHandle = @networkWhois[nhi..nhi2]
+    #
+    #   ###### OrgName #######
+    #   on = @networkWhois.index(/OrgName:/)
+    #   on = on+9
+    #   temp = @networkWhois[on..-1]
+    #   on2 = temp.index(/\n/)
+    #   on2 = on2 + on
+    #   @orgName = @networkWhois[on..on2]
     # end
 
-    # # --- Registrant --- #
-    # begin
-    #   rstStruct = p.registrant_contacts
-    #   rstName = rstStruct[0]['name']
-    #   #rstOrg = rstStruct[0]['organization']
-    #   #rstEmail = rstStruct[0]['email']
-    # rescue
-    #   rstName = "Couldn't get registrant info"
-    # else
-    #   #puts @rstStruct
-    #   #puts "Registrant name: #{@rstName} "
-    #   #puts "Registrant Org: #{@rstOrg} "
-    #   #puts "Registrant email: #{@rstEmail} "
-    #   #puts "\n"
-    # end
+    puts "\n\n"
+    puts @allWhois
+    puts "\n"
+
     #### end of Whois Retrevial ####
 
     # create the attack with the new status parameter
@@ -202,7 +232,8 @@ class AttacksController < ApplicationController
       :status => status,
       :domain => @dom,
       :registrationDate => @createdOn,
-      :expireryDate => @expiresOn
+      :expireryDate => @expiresOn,
+      :notes => @allWhois
     ))
 
     # @case = Case.new(params[:caseID])
