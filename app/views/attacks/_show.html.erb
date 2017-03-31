@@ -16,7 +16,14 @@
           <img src="/assets/green_check.png" alt="OK" class="img-circle status_img">
           <span style="margin-left:10px; font-size:1.2em">Status: <span class="info"><%= @attack.status %></span></span><br>
           <span style="margin-left:10px; font-size:.7em">Last check: <span class="info">7FEB2017</span></span>
-          <%#= link_to 'Update Status', update_status_attacks_path(@attack.url) %>
+          <%#= link_to 'Update Status', update_status_attacks_path(@attack) %>
+            <%=form_for :attack, url: url_for( :controller => :attacks, :action => :update_status), :method => :get do |f| %>
+              <%= f.hidden_field :url, :value => @attack.url %>
+              <%= f.hidden_field :id, :value => @attack.id %>
+              <div class="actions btn">
+                <%= f.submit "Update Status" %>
+              </div>
+            <% end %>
         </div>
         <div class="col-xs-8" id="url_box">
           <span style="font-size:1.2em">URL: <%= @attack.url %></span>
