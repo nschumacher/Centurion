@@ -152,6 +152,7 @@ class AttacksController < ApplicationController
       conn = Faraday.new(:url => url)
       response = conn.get
     rescue Faraday::ConnectionFailed => e
+      p "\n\nhere is the URL #{url}\n\n\n"
       return "Unknown. Requires attention."
     else
       statusNum = response.status
@@ -159,8 +160,12 @@ class AttacksController < ApplicationController
         return "Online"
       elsif (statusNum == 403)
         return "Access Forbidden"
+      elsif (statusNum == 302)
+        status = "Redirecting"
+      elsif (statusNum == 301)
+        status = "Moved Permanantly"
       else
-        return"Unknown. Requires attention."
+        return"Status Code: #{statusNum}"
       end
     end
   end
