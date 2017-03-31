@@ -1,15 +1,3 @@
-  <%=form_for :attack, url: url_for( :controller => :attacks, :action => :check), :method => :get do |f| %>
-      <div class="field">
-        <%= f.label :url %><br/>
-        <%= f.text_field :url %>
-      </div> 
-
-    <div class="actions">
-      <%= f.submit "Next" %>
-    </div>
-  <% end %>
-
-<div class="afterCheck">
 <%= form_for(@attack) do |f| %>
   <% if @attack.errors.any? %>
     <div id="error_explanation">
@@ -29,10 +17,22 @@
   </h1>
 
   <%= f.hidden_field :attackID, :value => @lastAttackID %>
-
+  	<% if !@matches.nil? %>
+  	<div>
+  		Did you mean?
+  		<br>
+  		<% @matches.each do |match|%>
+  			<% if match.any? %>
+	  			<% match.each do |find|%>
+	  				<%= find[:url] %>
+	  				<br>
+	  			<% end %>
+  			<% end %>
+  		<% end %>
+  	</div>
+  	<% end %>
     <div class="field">
       <%= f.label :url %><br>
-    <%# @myURL.defined? %>
       <%= f.text_field :url, :value => @myURL %>
     </div>
     <div class="field">
@@ -52,4 +52,3 @@
       <%= f.submit %>
     </div>
 <% end %>
-</div>

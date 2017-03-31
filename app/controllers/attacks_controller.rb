@@ -38,6 +38,51 @@ class AttacksController < ApplicationController
     end
   end
 
+  def check
+    @myURL = params[:attack][:url]
+    #puts @myURL
+    #/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/
+    matchData = @myURL.to_s.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
+    if matchData.length == 0
+      respond_to do |format|
+      format.js
+       format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
+      end
+    else
+      #puts matchData
+      urlOnly = matchData.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)/).to_s
+      #puts urlOnly
+      foldersOnly = matchData[urlOnly.length..matchData.length]
+      #puts foldersOnly
+
+      if foldersOnly.length > 1 #there is at least one /../
+        foldersOnly[0] = ''
+        folders = foldersOnly.split('/')
+        #p folders
+        #puts folders.length
+
+        @matches = Array.new
+        @matches.push(Attack.where("url LIKE ?", "#{urlOnly}%"))
+        urlOnly << '/'
+
+        folders.each do |folder|
+          urlOnly << folder << '/'
+          #puts urlOnly
+          @matches.push(Attack.where("url LIKE ?", "#{urlOnly}%"))
+        end
+        #p @matches
+      else # either an empty address or only an empty address + /
+
+      end
+
+      @attack = Attack.new
+      respond_to do |format|
+          format.js
+          format.html
+      end
+    end
+  end  
+
   # GET /attacks/new
   def new
     @lastAttackID = Attack.order("created_at").last.attackID
