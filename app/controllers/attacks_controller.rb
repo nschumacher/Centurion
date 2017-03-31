@@ -86,7 +86,7 @@ class AttacksController < ApplicationController
     #### live here ####
     @allWhois = "\n"
 
-    # -- Domain -- #
+    # ------ Domain ------ #
     begin
       mywhois = Whois.whois(myURL)
       p = mywhois.parser
@@ -97,14 +97,22 @@ class AttacksController < ApplicationController
     else
     end
 
+    # ------ IP ------ #
+    begin
+      ip = IPSocket::getaddress(myURL)
+    rescue
+      ip = "Network Whois unreachable :( \n"
+      @allWhois += ip
+    else
+      @allWhois += "IP Address: " + ip + " \n"
+    end
 
-    # --- Domain creation and expiration --- #
+    # ------ Domain creation and expiration ------ #
     begin
       @createdOn = p.created_on
       @expiresOn = p.expires_on
       avail = p.available?
       reg = p.registered?
-
 
       # if @createdOn == ""
       #   #puts "\n CREATION WAS EMPTY\n"
@@ -130,7 +138,7 @@ class AttacksController < ApplicationController
 
     @allWhois += " \n"
 
-    # --- Registrant --- #
+    # ------ Registrant ------ #
     begin
       rstStruct = p.registrant_contacts
       rstName = rstStruct[0]['name']
@@ -154,7 +162,7 @@ class AttacksController < ApplicationController
 
     @allWhois += " \n"
 
-    # --- Registrar --- #
+    # ------ Registrar ------ #
     begin
       rarstruct = p.registrar
       rarName = p.registrar['name']
@@ -177,54 +185,88 @@ class AttacksController < ApplicationController
 
     @allWhois += " \n"
 
-    # --- IP --- #
-    begin
-      ip = Resolv.getaddresses(myURL)
-    rescue
-      ip = "The IP broke Scottie! \n"
-      #@allWhois += ip
-    else
-      @allWhois += "IP Address: " + ip + " \n"
-    end
-
-
-    # # --- ISP --- #
+    # ------ IP ------ #
     # begin
-    #   puts networkWhois = Whois.whois(ip[0])
-    #   networkWhois = networkWhois.to_s
+    #   @ip = Resolv.getaddresses(myURL)
     # rescue
-    #   puts "Couldn't retrieve Network whois"
+    #   @ip = "The IP broke Scottie! \n"
+    #   #@allWhois += @ip
     # else
-    #   ## NetName ##
-    #   nni = networkWhois.index(/NetName:/)
-    #   nni = nni+9
-    #   temp = networkWhois[nni..-1]
-    #   nni2 = temp.index(/\n/)
-    #   nni2 = nni2+nni
-    #   netName = networkWhois[nni..nni2]
-    #   #puts "\nNetName: " + netName + "\n"
-    #
-    #   ###### NetHandle #######
-    #   nhi = @networkWhois.index(/NetHandle:/)
-    #   nhi = nhi+11
-    #   temp = @networkWhois[nhi..-1]
-    #   nhi2 = temp.index(/\n/)
-    #   nhi2 = nhi2 + nhi
-    #   @netHandle = @networkWhois[nhi..nhi2]
-    #
-    #   ###### OrgName #######
-    #   on = @networkWhois.index(/OrgName:/)
-    #   on = on+9
-    #   temp = @networkWhois[on..-1]
-    #   on2 = temp.index(/\n/)
-    #   on2 = on2 + on
-    #   @orgName = @networkWhois[on..on2]
+    #   @allWhois += "IP Address: " + @ip + " \n"
     # end
 
-    puts "\n\n"
+
+    # --- ISP --- #
+    begin
+      ccc = Whois::Client.new
+      networkWhois = ccc.lookup(ip)
+
+      networkWhois = networkWhois.to_s
+
+      #puts "\n\nNetWhois: " + networkWhois + "\nend\n"
+
+    rescue
+      puts "\nCouldn't retrieve Network whois \n"
+    else
+      ###### NetName ######
+      begin
+        nni = networkWhois.index(/NetName:/)
+        nni = nni+9
+        temp = networkWhois[nni..-1]
+        nni2 = temp.index(/\n/)
+        nni2 = nni2+nni
+        netName = networkWhois[nni..nni2]
+      rescue
+        netName = "NetName not available \n"
+      else
+        @allWhois += "NetName: " + netName
+      end
+
+      ###### NetHandle #######
+      begin
+        nhi = networkWhois.index(/NetHandle:/)
+        nhi = nhi+11
+        temp = networkWhois[nhi..-1]
+        nhi2 = temp.index(/\n/)
+        nhi2 = nhi2 + nhi
+        netHandle = networkWhois[nhi..nhi2]
+      rescue
+        netHandle = "NetHandle not available \n"
+      else
+        @allWhois += "NetHandle: " + netHandle
+      end
+
+      ###### OrgName #######
+      begin
+        on = networkWhois.index(/OrgName:/)
+        on = on+9
+        temp = networkWhois[on..-1]
+        on2 = temp.index(/\n/)
+        on2 = on2 + on
+        orgName = networkWhois[on..on2]
+      rescue
+        orgName = "OrgName not available \n"
+      else
+        @allWhois += "OrgName: " + orgName
+      end
+    end
+
+    # ====== Nameservers ====== #
+    begin
+      ns = p.nameservers
+    rescue
+      ns = "Unable to retrieve nameserver information \n"
+    else
+      i = 0
+      while ns[i] != nil do
+        @allWhois += "Nameserver #{i}: " + ns[i].to_s + "\n"
+        i += 1
+      end
+    end
+
+    puts "\n"
     puts @allWhois
     puts "\n"
-
     #### end of Whois Retrevial ####
 
     # create the attack with the new status parameter
