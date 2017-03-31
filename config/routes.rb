@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :attacks do
     collection do
       get 'search'
+      get 'check'
     end
   end
   get 'pages/about'
