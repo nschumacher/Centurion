@@ -154,6 +154,7 @@ class AttacksController < ApplicationController
   # PATCH/PUT /attacks/1
   # PATCH/PUT /attacks/1.json
   def update
+    puts "\n\n\n\nwtf: #{attack_params}\n\n\n\n"
     respond_to do |format|
       if @attack.update(attack_params)
         format.html { redirect_to @attack, notice: 'Attack was successfully updated.' }
@@ -178,17 +179,18 @@ class AttacksController < ApplicationController
   def update_status
     # replace the "=>" in the params with ':'
     fixed_params = clean_my_params(params[:attack].to_s)
-
+    puts "\n\n\n\nHERE: #{fixed_params.to_s}\n\n\n\n"
     # Parse the fixed parameters and extract the URL
     attackJson = JSON.parse(fixed_params)
     myURL = attackJson["url"]
 
     # Check the status
     status = check_url_status(myURL)
-
+    @new_status = status
+    puts "\n\n\n\nHERE2: #{params[:attack].merge(:status => status, :id => params[:id]).to_s}\n\n\n\n"
     # update the attack with the new status parameter
     respond_to do |format|
-      if @attack.update(attack_params.merge(:status => status))
+      if @attack.update(attack_params.merge(params[:attack].merge(:status => status, :id => params[:id])))
         format.html { redirect_to @attack, notice: 'Attack was successfully updated.' }
         format.json { render :show, status: :ok, location: @attack }
       else
@@ -231,6 +233,8 @@ class AttacksController < ApplicationController
         dem_params[i] = ':'
       elsif dem_params[i] == '>'
         dem_params[i] = ''
+      elsif dem_params[i] == '\''
+        dem_params[i] = '"'
       else
       end
       i = i+1

@@ -16,7 +16,12 @@
           <img src="/assets/green_check.png" alt="OK" class="img-circle status_img">
           <span style="margin-left:10px; font-size:1.2em">Status: <span class="info"><%= @attack.status %></span></span><br>
           <span style="margin-left:10px; font-size:.7em">Last check: <span class="info">7FEB2017</span></span>
-          <%#= link_to 'Update Status', update_status_attacks_path(@attack.url) %>
+
+          <%#= link_to "Yes", :controller => :attack, :action => :update_status, :url => @attack.url, class: 'btn btn-danger' %>
+          <%#= button_to 'Check Status', {:controller => "attack", :action => "update_status", :url => @attack.url} , :method=>:post  %>
+          <%#= button_to 'Check Status', update_attacks_status_path, params: { :attack => "{ 'url' => '#{@attack.url}', 'status' => ''}"} %>
+
+          <%= button_to 'Check Status', update_attacks_status_path, params: { 'attack[url]' => @attack.url }%>
         </div>
         <div class="col-xs-8" id="url_box">
           <span style="font-size:1.2em">URL: <%= @attack.url %></span>
@@ -122,7 +127,7 @@
       <strong>Notes:</strong>
       <%= @attack.notes %>
 
-      <%= link_to 'Edit', edit_attack_path(@attack), :remote => true %> |
+      <%= link_to 'Edit', edit_attack_path(@attack) %> |
       <%= link_to 'Back', attacks_path %>
     <!--</div>
     </div>
