@@ -39,6 +39,13 @@ class AttacksController < ApplicationController
   end
 
   def check
+    @lastAttackID = Attack.order("created_at").last.attackID
+    @lastAttackID[0]=""
+    @lastAttackID[0]=""
+    @lastAttackID = @lastAttackID.to_i
+    @lastAttackID = @lastAttackID + 1
+    @lastAttackID.to_s
+    @lastAttackID = "AX#{@lastAttackID}"
     @myURL = params[:attack][:url]
     #puts @myURL
     #/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/
@@ -81,7 +88,7 @@ class AttacksController < ApplicationController
           format.html
       end
     end
-  end  
+  end
 
   # GET /attacks/new
   def new
