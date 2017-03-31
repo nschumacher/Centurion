@@ -385,7 +385,7 @@ class AttacksController < ApplicationController
     p status
     # update the attack with the new status parameter
     respond_to do |format|
-      if @attack.update(attack_params.merge(params[:attack].merge(:status => status, :id => params[:id])))
+      if @attack.update(attack_params.merge(:status => status))
         format.html { redirect_to @attack, notice: 'Attack was successfully updated.' }
         format.json { render :show, status: :ok, location: @attack }
       else

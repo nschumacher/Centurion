@@ -12,7 +12,6 @@ Rails.application.routes.draw do
       get 'update_status'
     end
   end
-  post 'attacks/:id/update_status' => 'attacks#update_status', as: :update_attacks_status
 
   get 'pages/about'
 
