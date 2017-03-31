@@ -170,15 +170,16 @@ class AttacksController < ApplicationController
 
   def update_status
     # replace the "=>" in the params with ':'
-    fixed_params = clean_my_params(params[:attack].to_s)
+    #fixed_params = clean_my_params(params[:attack].to_s)
 
     # Parse the fixed parameters and extract the URL
-    attackJson = JSON.parse(fixed_params)
-    myURL = attackJson["url"]
+    #attackJson = JSON.parse(fixed_params)
+    @attack = Attack.find_by_id(params[:attack][:id])
+    myURL = params[:attack][:url] #attackJson["url"]
 
     # Check the status
     status = check_url_status(myURL)
-
+    p status
     # update the attack with the new status parameter
     respond_to do |format|
       if @attack.update(attack_params.merge(:status => status))
