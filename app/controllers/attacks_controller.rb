@@ -76,12 +76,134 @@ class AttacksController < ApplicationController
     # Parse the fixed parameters and extract the URL
     attackJson = JSON.parse(fixed_params)
     myURL = attackJson["url"]
+    #puts "\n.#{myURL}.\n"
 
     # Check the status
     status = check_url_status(myURL)
 
+    tempURL = myURL[7..-1]
+
+    #### live here ####
+    @allWhois = "1\n"
+
+    # -- Domain -- #
+    begin
+      mywhois = Whois.whois(tempURL)
+      p = mywhois.parser
+      @dom = p.domain
+      @allWhois += "Domain:" + @dom +"\n"
+    rescue
+      @dom = "\nDomain not retrieved\n"
+    else
+    end
+
+
+    # --- Domain creation and expiration --- #
+    begin
+      @createdOn = p.created_on
+      @expiresOn = p.expires_on
+      avail = p.available?
+      reg = p.registered?
+
+
+      # if @createdOn == ""
+      #   #puts "\n CREATION WAS EMPTY\n"
+      #   @createdOn = "NA"
+      #   @expiresOn = "NA"
+      # elsif @createdOn == nil
+      #   @createdOn = "NA"
+      #   @expiresOn = "NA"
+      # else
+      #   puts "\nIf it's not empty... what in it? .#{@createdOn}. "
+      # end
+    rescue
+      #puts "\nDomain creation/expiration dates NA\n"
+      @createdOn = "Creation date unavailable"
+      @expiresOn = "Expiration date unavailable"
+      @allWhois += "Created On: "+ @createdOn.to_s + "\n" + "Expires On: " + @expiresOn.to_s + "\n"
+
+    else
+      @allWhois += "Created On: "+ @createdOn.to_s + "\n" + "Expires On: " + @expiresOn.to_s + "\n"
+      # puts "Creation date: #{@createdOn}"
+      # puts "Expiration date: #{@expiresOn}"
+    end
+
+    puts "\n\n"
+    puts @allWhois
+    puts "\n"
+
+    # --- Registrar --- #
+    begin
+      rarstruct = p.registrar
+      puts rarName = p.registrar['name']
+      puts rarOrg = p.registrar['organization']
+      puts rarID = p.registrar['id']
+    rescue
+      rarName = "Couldn't retrieve registrar info"
+      @allWhois += "Registrar Name: " + rarName + "\n"
+    else
+      if rarName != nil
+        @allWhois += "Registrar Name: " + rarName + "\n"
+      else end
+#"\nRegistrar Org: " + rarOrg + "\nRegistrar ID: " + rarID +
+        #puts "Rar struct: #{@rarstruct} "
+        #puts "Rar name:   #{@rarName} "
+        #puts "Rar ID:     #{@rarID} "
+        #puts "Rar Org:    #{@rarOrg} "
+        #puts "\n"
+    end
+
+    puts "\n\n"
+    puts @allWhois
+    puts "\n"
+
+    # # --- ISP --- #
+    # begin
+    #   networkWhois = Whois.whois(ip[0])
+    #   networkWhois = networkWhois.to_s
+    # rescue
+    #   puts "Couldn't retrieve Network whois"
+    # else
+    #   ## NetName ##
+    #   nni = networkWhois.index(/NetName:/)
+    #   nni = nni+9
+    #   temp = networkWhois[nni..-1]
+    #   nni2 = temp.index(/\n/)
+    #   nni2 = nni2+nni
+    #   netName = networkWhois[nni..nni2]
+    # end
+    # --- IP --- #
+    # begin
+    #   ip = Resolv.getaddresses(myURL)
+    # rescue
+    #   puts = "\n\n The IP broke Scottie!\n"
+    # else
+    # end
+
+    # # --- Registrant --- #
+    # begin
+    #   rstStruct = p.registrant_contacts
+    #   rstName = rstStruct[0]['name']
+    #   #rstOrg = rstStruct[0]['organization']
+    #   #rstEmail = rstStruct[0]['email']
+    # rescue
+    #   rstName = "Couldn't get registrant info"
+    # else
+    #   #puts @rstStruct
+    #   #puts "Registrant name: #{@rstName} "
+    #   #puts "Registrant Org: #{@rstOrg} "
+    #   #puts "Registrant email: #{@rstEmail} "
+    #   #puts "\n"
+    # end
+    #### end of Whois Retrevial ####
+
     # create the attack with the new status parameter
-    @attack = Attack.new(attack_params.merge(:status => status))
+    @attack = Attack.new(attack_params.merge(
+      :status => status,
+      :domain => @dom,
+      :registrationDate => @createdOn,
+      :expireryDate => @expiresOn
+    ))
 
     # @case = Case.new(params[:caseID])
     # @case.attackID = @attack.attackID
@@ -160,7 +282,7 @@ class AttacksController < ApplicationController
       elsif (statusNum == 403)
         return "Access Forbidden"
       else
-        return"Unknown. Requires attention."
+        return"Status code: #{statusNum}"
       end
     end
   end
@@ -189,6 +311,6 @@ class AttacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attack_params
-      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate, :notes)
+      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate,:expireryDate, :notes)
     end
 end
