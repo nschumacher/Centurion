@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :attacks do
     collection do
       get 'search'
+      get 'check'
       #get 'update_status/:url', to: 'attacks#update_status', as: 'update_status'
     end
   end
