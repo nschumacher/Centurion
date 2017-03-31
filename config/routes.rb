@@ -8,11 +8,10 @@ Rails.application.routes.draw do
     collection do
       get 'search'
       get 'check'
+      #get 'update_status/:url', to: 'attacks#update_status', as: 'update_status'
     end
   end
   get 'pages/about'
-
-  #get 'pages/contact'
 
   get 'pages/contact', to: 'messages#new', as: 'contact'
   post 'pages/contact', to: 'messages#create'
