@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag 'navbar', media: 'all' %>
-<nav class="navbar navbar-default">
+<!-- <nav class="navbar navbar-default" style="margin: 0px; min-height: 60px">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
+    <!-- Brand and toggle get grouped for better mobile display ->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
@@ -10,23 +10,48 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand pull-left" id="app_title_link" href="/attacks">
-        <img src="/assets/centurion_1.png" id="app_title_logo" class="pull-left">
-        <span id="app_title_text">CENTURION</span>
+        <!-- <img src="/assets/centurion_1.png" id="app_title_logo" class="pull-left"> ->
+        <span id="app_title_text">Centurion</span>
       </a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling ->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-          <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
-          <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to "Sign Up", new_user_registration_path %></li>
-          <li><%= link_to "Log In", new_user_session_path %></li>
-        <% end %>
+
 
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+    </div><!-- /.navbar-collapse ->
+  </div><!-- /.container-fluid ->
+</nav> -->
+<!-- BEGIN THE CLUSTERFUCK -->
+<div class="mynav" style="margin: 0px; width: 100%">
+  <div id="page_sign_in" style="float: right">
+    <% if user_signed_in? %>
+    <div class="dropdown" align="right">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        User First Name
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+        <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+      </ul>
+    </div>
+    <% else %>
+      <li><%= link_to "Sign Up", new_user_registration_path %></li>
+      <li><%= link_to "Log In", new_user_session_path %></li>
+    <% end %>
+  </div>
+  <div id="app_title_link" style="float: left" align="left">
+    <a class="" id="app_title_link" href="/attacks">
+      <span id="app_title_text">Centurion</span>
+    </a>
+  </div>
+  <div align="left" id="page_title">
+    Dashboard
+  </div>
+</div>

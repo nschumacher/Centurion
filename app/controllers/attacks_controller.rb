@@ -4,7 +4,7 @@ class AttacksController < ApplicationController
   # GET /attacks
   # GET /attacks.json
   def index
-    @attacks = Attack.paginate(:page => params[:page], :per_page => 14)
+    @attacks = Attack.paginate(:page => params[:page], :per_page => 15)
 
     # allow for ajax
     respond_to do |format|
