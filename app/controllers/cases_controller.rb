@@ -8,7 +8,7 @@ class CasesController < ApplicationController
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -18,7 +18,7 @@ class CasesController < ApplicationController
   def show
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end

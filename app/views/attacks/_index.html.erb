@@ -1,21 +1,12 @@
 <!-- <p id="notice"><%#= notice %></p> -->
 
 <div class="row">
-  <!-- <div class="col-xs-3 col-sm-2">
-    <div class="sidebar_nav_container" align="center">
-      <div class="sidebar_nav_entry"><a href="/">Dashboard</a></div>
-      <div class="sidebar_nav_entry"><%#= link_to 'About', pages_about_path, :remote => true %></div>
-      <div class="sidebar_nav_entry"><%#= link_to 'Contact Us', contact_path, :remote => true %></div>
-    </div>
-  </div> -->
-
-  <!-- <div class="col-xs-9 col-sm-10"> -->
   <div class="col-xs-12" style="padding-right: 0px;">
     <div class="page_content" id="page_content">
       <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-4 buttons">
           <a class="_button" href="#" role="button">Check Status</a>
-          <%= link_to '+', new_attack_path, :class=>'_button', :remote => true %>
+          <%= link_to '+', new_attack_path, :class=>'_button' %>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-5">
           <%= form_tag search_attacks_path, method: :get, class: "input-group", style:"width: 100%", :remote => true do %>
@@ -38,11 +29,12 @@
 
         <tbody>
           <% @attacks.each do |attack| %>
-              <!-- <tr class='clickable-row' data-href='/attacks/<%=attack.id%>'> -->
-              <tr>
-                <td><%= attack.status %> <%= link_to 'Show', attack_path(:id => attack.id), :remote => true %></td></a>
+              <tr class="clickable-row" data-href="/attacks/<%=attack.id%>">
+                <td><%= attack.status %>
                 <td align="center"><div class="URL" align="center"><%= attack.url %></div></td>
-                <td><%= attack.attackID %></td>
+                <td>
+                  <%= attack.attackID %>
+                </td>
                 <td><%= attack.target %></td>
                 <td><%= attack.registrationDate %></td>
               </tr>
