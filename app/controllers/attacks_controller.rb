@@ -4,11 +4,11 @@ class AttacksController < ApplicationController
   # GET /attacks
   # GET /attacks.json
   def index
-    @attacks = Attack.paginate(:page => params[:page], :per_page => 14)
+    @attacks = Attack.paginate(:page => params[:page], :per_page => 15)
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -23,7 +23,7 @@ class AttacksController < ApplicationController
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -33,8 +33,60 @@ class AttacksController < ApplicationController
   # GET /attacks/1.json
   def show
     respond_to do |format|
-      format.js
+      # format.js
       format.html
+    end
+  end
+
+  def check
+    @lastAttackID = Attack.order("created_at").last.attackID
+    @lastAttackID[0]=""
+    @lastAttackID[0]=""
+    @lastAttackID = @lastAttackID.to_i
+    @lastAttackID = @lastAttackID + 1
+    @lastAttackID.to_s
+    @lastAttackID = "AX#{@lastAttackID}"
+    @myURL = params[:attack][:url]
+    #puts @myURL
+    #/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/
+    matchData = @myURL.to_s.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
+    if matchData.length == 0
+      respond_to do |format|
+      # format.js
+       format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
+      end
+    else
+      #puts matchData
+      urlOnly = matchData.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)/).to_s
+      #puts urlOnly
+      foldersOnly = matchData[urlOnly.length..matchData.length]
+      #puts foldersOnly
+
+      if foldersOnly.length > 1 #there is at least one /../
+        foldersOnly[0] = ''
+        folders = foldersOnly.split('/')
+        #p folders
+        #puts folders.length
+
+        @matches = Array.new
+        @matches.push(Attack.where("url LIKE ?", "#{urlOnly}%"))
+        urlOnly << '/'
+
+        folders.each do |folder|
+          urlOnly << folder << '/'
+          #puts urlOnly
+          @matches.push(Attack.where("url LIKE ?", "#{urlOnly}%"))
+        end
+        #p @matches
+      else # either an empty address or only an empty address + /
+
+      end
+
+      @attack = Attack.new
+      respond_to do |format|
+          # format.js
+          format.html
+      end
     end
   end
 
@@ -53,7 +105,7 @@ class AttacksController < ApplicationController
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -62,7 +114,7 @@ class AttacksController < ApplicationController
   def edit
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -328,6 +380,7 @@ class AttacksController < ApplicationController
   # PATCH/PUT /attacks/1
   # PATCH/PUT /attacks/1.json
   def update
+    puts "\n\n\n\nwtf: #{attack_params}\n\n\n\n"
     respond_to do |format|
       if @attack.update(attack_params)
         format.html { redirect_to @attack, notice: 'Attack was successfully updated.' }
@@ -351,15 +404,16 @@ class AttacksController < ApplicationController
 
   def update_status
     # replace the "=>" in the params with ':'
-    fixed_params = clean_my_params(params[:attack].to_s)
+    #fixed_params = clean_my_params(params[:attack].to_s)
 
     # Parse the fixed parameters and extract the URL
-    attackJson = JSON.parse(fixed_params)
-    myURL = attackJson["url"]
+    #attackJson = JSON.parse(fixed_params)
+    @attack = Attack.find_by_id(params[:attack][:id])
+    myURL = params[:attack][:url] #attackJson["url"]
 
     # Check the status
     status = check_url_status(myURL)
-
+    p status
     # update the attack with the new status parameter
     respond_to do |format|
       if @attack.update(attack_params.merge(:status => status))
@@ -378,6 +432,7 @@ class AttacksController < ApplicationController
       conn = Faraday.new(:url => url)
       response = conn.get
     rescue Faraday::ConnectionFailed => e
+      p "\n\nhere is the URL #{url}\n\n\n"
       return "Unknown. Requires attention."
     else
       statusNum = response.status
@@ -385,6 +440,10 @@ class AttacksController < ApplicationController
         return "Online"
       elsif (statusNum == 403)
         return "Access Forbidden"
+      elsif (statusNum == 302)
+        status = "Redirecting"
+      elsif (statusNum == 301)
+        status = "Moved Permanantly"
       else
         return"Status code: #{statusNum}"
       end
@@ -400,6 +459,8 @@ class AttacksController < ApplicationController
         dem_params[i] = ':'
       elsif dem_params[i] == '>'
         dem_params[i] = ''
+      elsif dem_params[i] == '\''
+        dem_params[i] = '"'
       else
       end
       i = i+1

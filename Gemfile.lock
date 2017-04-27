@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/codahale/bcrypt-ruby.git
+  revision: 23b0517e20e7ddf2e733c1bcdb22b0b12166f042
+  specs:
+    bcrypt (3.1.11)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -39,7 +45,6 @@ GEM
     arel (6.0.4)
     autoprefixer-rails (6.4.0.2)
       execjs
-    bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.3.7)
@@ -99,8 +104,14 @@ GEM
     multipart-post (2.0.0)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
+    nokogiri (1.7.0.1-x64-mingw32)
+      mini_portile2 (~> 2.1.0)
+    nokogiri (1.7.0.1-x86-mingw32)
+      mini_portile2 (~> 2.1.0)
     orm_adapter (0.5.0)
     pg (0.19.0)
+    pg (0.19.0-x64-mingw32)
+    pg (0.19.0-x86-mingw32)
     rack (1.6.5)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -161,6 +172,9 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
+    sqlite3 (1.3.13-x64-mingw32)
+    sqlite3 (1.3.13-x86-mingw32)
+    sqlite3 (1.3.13-x86-mswin32-60)
     thor (0.19.4)
     thread_safe (0.3.5)
     tilt (2.0.5)
@@ -169,6 +183,8 @@ GEM
     turbolinks-source (5.0.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2017.2)
+      tzinfo (>= 1.0.0)
     uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
     warden (1.2.6)
@@ -178,19 +194,28 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    whois (4.0.1)
+    whois-parser (1.0.0)
+      activesupport (>= 4)
+      whois (>= 4.0.0)
     will_paginate (3.1.5)
 
 PLATFORMS
   ruby
+  x64-mingw32
+  x86-mingw32
+  x86-mswin32
 
 DEPENDENCIES
-  bcrypt
+  bcrypt!
   bootstrap-sass
   byebug
   coffee-rails (~> 4.1.0)
   devise
+  faraday
   jbuilder (~> 2.0)
   jquery-rails
+  json
   pg
   rails (= 4.2.4)
   rails_12factor
@@ -203,10 +228,12 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  whois
+  whois-parser
   will_paginate (~> 3.1.0)
 
 RUBY VERSION
-   ruby 2.3.0p0
+   ruby 2.3.3p222
 
 BUNDLED WITH
-   1.14.5
+   1.14.6
