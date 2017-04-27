@@ -8,7 +8,7 @@ class AttacksController < ApplicationController
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -23,7 +23,7 @@ class AttacksController < ApplicationController
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -33,7 +33,7 @@ class AttacksController < ApplicationController
   # GET /attacks/1.json
   def show
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -52,7 +52,7 @@ class AttacksController < ApplicationController
     matchData = @myURL.to_s.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
     if matchData.length == 0
       respond_to do |format|
-      format.js
+      # format.js
        format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
       end
     else
@@ -84,7 +84,7 @@ class AttacksController < ApplicationController
 
       @attack = Attack.new
       respond_to do |format|
-          format.js
+          # format.js
           format.html
       end
     end
@@ -105,7 +105,7 @@ class AttacksController < ApplicationController
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -114,7 +114,7 @@ class AttacksController < ApplicationController
   def edit
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end

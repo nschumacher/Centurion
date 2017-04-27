@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users, :controllers => { registrations: 'registrations' }
   resources :webhosts
   resources :isps
   resources :registrars
   resources :cases
-  devise_for :users
   resources :attacks do
     collection do
       get 'search'

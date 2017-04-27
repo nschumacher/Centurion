@@ -5,8 +5,10 @@
   background: transparent;
   border-radius: 0;
   border: none;
-  margin-bottom: 15px;
-  margin-top: 5px;
+  // margin-bottom: 15px;
+  // margin-top: 5px;
+  margin: 0px;
+  width: 100%;
 
   a{
     color: $gold_alt_1 !important;
@@ -39,6 +41,8 @@
 #page_sign_in {
   padding-top: 10px;
   margin-right: 25px;
+  min-width: 155px;
+  float:right;
 }
 .dropdown {
   button {

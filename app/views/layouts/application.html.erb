@@ -64,15 +64,16 @@
       <!-- CONTENT -->
       <div class="col-xs-11" style="padding: 0px">
       	<div class="container-fluid all_content">
+          <div id="test"></div>
       		<%= yield %>
       	</div>
       </div>
     </div>
   </div>
   <script>
-  var sidebar = document.getElementById("side_nav_container");
-  var links = sidebar.getElementsByTagName("a");
-    if(window.location.href.indexOf("/attacks") > -1) {
+    var sidebar = document.getElementById("side_nav_container");
+    var links = sidebar.getElementsByTagName("a");
+    if(window.location.href.indexOf("/attacks") > -1 || document.location.pathname == '/') {
       document.getElementById("contact_nav").style.borderLeft = 'none';
       document.getElementById("about_nav").style.borderLeft = 'none';
       links[0].style.color = '#C19000';
