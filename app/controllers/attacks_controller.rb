@@ -76,14 +76,45 @@ class AttacksController < ApplicationController
     # Parse the fixed parameters and extract the URL
     attackJson = JSON.parse(fixed_params)
     myURL = attackJson["url"]
+
+    if myURL[0..3] == "www."
+      tURL = "http://" + myURL
+      myURL = tURL
+    elsif myURL[0..3] != "http"
+      tURL = "http://" + myURL
+      myURL = tURL
+    else end
+
     #puts "\n.#{myURL}.\n"
 
     # Check the status
     status = check_url_status(myURL)
 
-    myURL = myURL[7..-1]
 
-    #### live here ####
+        #### live here ####
+    # puts "\n====="
+    # puts "Starting myURL: " + myURL + "\n"
+
+    # check for http and https then check for www
+    newURL = myURL
+
+    if newURL[0..4] == "https"
+      newURL = newURL[8..-1]
+    elsif newURL[0..3] == "http"
+      newURL = newURL[7..-1]
+    else end
+
+    if newURL[0..3] == "www."
+      newURL = newURL[4..-1]
+    else end
+
+    # puts "====="
+    # puts "newURL: " + newURL
+    # puts "====="
+
+    myURL = newURL
+
+
     @allWhois = "\n"
 
     # ------ Domain ------ #
