@@ -16,7 +16,7 @@ class AttacksController < ApplicationController
   # Searching for attacks
   def search
     if params[:search].present?
-        @attacks = Attack.search(params[:search], page: params[:page], per_page: 14)
+        @attacks = Attack.search(params[:search], page: params[:page], per_page: 15)
     else
       @attacks = nil
     end
@@ -50,17 +50,34 @@ class AttacksController < ApplicationController
     #puts @myURL
     #/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/
     matchData = @myURL.to_s.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
+    puts "1 matchData: " + matchData
+
     if matchData.length == 0
-      respond_to do |format|
-      # format.js
-       format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
+      puts "\n==== 1 ==== "
+      matchData = @myURL.to_s + "/"
+      puts "2 matchData: " + matchData
+
+      matchData = matchData.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
+
+      puts "3 matchData: " + matchData
+
+      if matchData.length == 0
+        puts "\n==== 2 ==== "
+        respond_to do |format|
+
+          # format.js
+         format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
+        end
       end
-    else
-      #puts matchData
+
+    end
+      puts "\ns============="
+      puts "matchData: " + matchData
       urlOnly = matchData.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)/).to_s
-      #puts urlOnly
+      puts "urlOnly: " + urlOnly
       foldersOnly = matchData[urlOnly.length..matchData.length]
-      #puts foldersOnly
+      puts "folderOnly: " + foldersOnly
+      puts "=============\n"
 
       if foldersOnly.length > 1 #there is at least one /../
         foldersOnly[0] = ''
@@ -87,7 +104,6 @@ class AttacksController < ApplicationController
           # format.js
           format.html
       end
-    end
   end
 
   # GET /attacks/new
@@ -129,6 +145,14 @@ class AttacksController < ApplicationController
     attackJson = JSON.parse(fixed_params)
     myURL = attackJson["url"]
 
+    # removing trailing /
+    puts "\n====="
+    urlSlash = myURL.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)/).to_s
+    puts "urlSlash: " + urlSlash
+    myURL = urlSlash
+    puts "\n====="
+
+
     if myURL[0..3] == "www."
       tURL = "http://" + myURL
       myURL = tURL
@@ -144,8 +168,8 @@ class AttacksController < ApplicationController
 
 
         #### live here ####
-    # puts "\n====="
-    # puts "Starting myURL: " + myURL + "\n"
+     puts "\n====="
+     puts "Starting myURL: " + myURL + "\n"
 
     # check for http and https then check for www
     newURL = myURL
@@ -160,9 +184,9 @@ class AttacksController < ApplicationController
       newURL = newURL[4..-1]
     else end
 
-    # puts "====="
-    # puts "newURL: " + newURL
-    # puts "====="
+     puts "====="
+     puts "newURL: " + newURL
+     puts "====="
 
     myURL = newURL
 
