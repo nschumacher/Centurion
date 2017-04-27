@@ -7,18 +7,100 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
+  <!-- custom stylesheet for this file -->
+  <%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true %>
+
 </head>
-<!-- 232323 -->
-<body style="background: #202020">
-	<%= render 'layouts/navbar' %>
 
-	<!--<p class="notice"><%#= notice %></p>
-    <p class="alert"><%#= alert %></p>-->
+<body style="background: #0C0C0D">
 
-	<div class="container-fluid all_content">
-		<%= yield %>
-	</div>
+	<div class="container" style="margin-right: 0px !important;margin-left: 0px !important;width: 100%;">
+    <!-- NAVBAR? -->
+    <div class="row" style="padding:0px">
+      <div class='col-xs-1' id="site_logo_box" align="center">
+        <img src="/assets/centurion_1.png" id="app_title_log" style="width: 60px;">
+      </div>
+      <div class="col-xs-11" id="site_navbar_container">
+        <%= render 'layouts/navbar' %>
+      </div>
+    </div>
 
-	<%#= render 'layouts/footer' %>
+    <!-- BODY CONTENT -->
+    <div class="row" style="padding:0px">
+
+      <!-- BEGIN SIDE BAR NAV -->
+      <div class='col-xs-1' id="side_nav_container">
+        <br>
+        <a href="/attacks">
+          <div id="dash_nav" align="center"  class="side_nav_link_box">
+
+            <img src="/assets/home_dark.png" class="side_nav_logo" id="dash_logo"><br>
+            Dashboard
+
+          </div>
+        </a>
+
+        <a href="/pages/about">
+          <div id="about_nav" align="center"  class="side_nav_link_box">
+
+            <img src="/assets/question_dark.png" class="side_nav_logo" id="about_logo"><br>
+            About Us
+
+          </div>
+        </a>
+
+        <a href="/pages/contact">
+        <div id="contact_nav" align="center"  class="side_nav_link_box">
+
+            <img src="/assets/pen_dark.png" class="side_nav_logo" id="contact_logo"><br>
+            Contact Us
+
+        </div>
+        </a>
+
+      </div>
+      <!-- END SIDE BAR NAV -->
+
+      <!-- CONTENT -->
+      <div class="col-xs-11" style="padding: 0px">
+      	<div class="container-fluid all_content">
+      		<%= yield %>
+      	</div>
+      </div>
+    </div>
+  </div>
+  <script>
+  var sidebar = document.getElementById("side_nav_container");
+  var links = sidebar.getElementsByTagName("a");
+    if(window.location.href.indexOf("/attacks") > -1) {
+      document.getElementById("contact_nav").style.borderLeft = 'none';
+      document.getElementById("about_nav").style.borderLeft = 'none';
+      links[0].style.color = '#C19000';
+      document.getElementById("dash_nav").style.borderLeft = '3px solid #8E000A';
+      document.getElementById("contact_logo").src="/assets/pen_dark.png";
+      document.getElementById("about_logo").src="/assets/question_dark.png";
+      document.getElementById("dash_logo").src="/assets/home_light.png";
+    } else if (window.location.href.indexOf("/pages/about") > -1) {
+      document.getElementById("page_title").innerHTML = 'About Us';
+      document.getElementById("dash_nav").style.borderLeft = 'none';
+      document.getElementById("contact_nav").style.borderLeft = 'none';
+      links[1].style.color = '#C19000';
+      document.getElementById("about_nav").style.borderLeft = '3px solid #8E000A';
+      document.getElementById("contact_logo").src="/assets/pen_dark.png";
+      document.getElementById("dash_logo").src="/assets/home_dark.png";
+      document.getElementById("about_logo").src="/assets/question_light.png";
+    } else if (window.location.href.indexOf("/pages/contact") > -1) {
+      document.getElementById("page_title").innerHTML = 'Contact Us';
+      document.getElementById("dash_logo").src="/assets/home_dark.png";
+      document.getElementById("dash_nav").style.borderLeft = 'none';
+      document.getElementById("about_nav").style.borderLeft = 'none';
+      links[2].style.color = '#C19000';
+      document.getElementById("contact_nav").style.borderLeft = '3px solid #8E000A';
+      document.getElementById("about_logo").src="/assets/question_dark.png";
+      document.getElementById("dash_logo").src="/assets/home_dark.png";
+      document.getElementById("contact_logo").src="/assets/pen_light.png";
+    }
+  </script>
+
 </body>
 </html>

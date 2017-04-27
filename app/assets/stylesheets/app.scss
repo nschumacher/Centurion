@@ -1,0 +1,39 @@
+@import "color_palette";
+
+#side_nav_container {
+  background-color: $dark_alt_2;
+  // min-height: 665px;
+  padding: 0px;
+  a{
+    color: $gold;
+    text-decoration: none;
+    text-shadow: $text_shadow_default;
+    font-family: 'Cinzel', serif !important;
+  }
+  a:hover {
+    color: $gold_alt_2;
+  }
+}
+.side_nav_link_box {
+  margin-bottom: 30px;
+}
+.side_nav_logo {
+  width: 40px;
+  padding-bottom: 5px;
+}
+#site_logo_box{
+  background-color: $darkest_red;
+  padding:0px;
+  padding-top: 3px;
+
+}
+#site_navbar_container {
+  padding: 0px;
+  background-color: $dark_alt_2;
+  padding-left: 10px;
+  padding-top: 3px;
+}
+.all_content {
+  border-top: 1px solid $darkest_red;
+  border-left: 1px solid $darkest_red;
+}

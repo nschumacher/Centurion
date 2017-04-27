@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'update_status'
     end
   end
+
   get 'pages/about'
 
   get 'pages/contact', to: 'messages#new', as: 'contact'

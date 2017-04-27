@@ -4,7 +4,7 @@ class AttacksController < ApplicationController
   # GET /attacks
   # GET /attacks.json
   def index
-    @attacks = Attack.paginate(:page => params[:page], :per_page => 14)
+    @attacks = Attack.paginate(:page => params[:page], :per_page => 15)
 
     # allow for ajax
     respond_to do |format|
@@ -39,6 +39,13 @@ class AttacksController < ApplicationController
   end
 
   def check
+    @lastAttackID = Attack.order("created_at").last.attackID
+    @lastAttackID[0]=""
+    @lastAttackID[0]=""
+    @lastAttackID = @lastAttackID.to_i
+    @lastAttackID = @lastAttackID + 1
+    @lastAttackID.to_s
+    @lastAttackID = "AX#{@lastAttackID}"
     @myURL = params[:attack][:url]
     #puts @myURL
     #/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/
@@ -81,7 +88,7 @@ class AttacksController < ApplicationController
           format.html
       end
     end
-  end  
+  end
 
   # GET /attacks/new
   def new
@@ -342,6 +349,7 @@ class AttacksController < ApplicationController
   # PATCH/PUT /attacks/1
   # PATCH/PUT /attacks/1.json
   def update
+    puts "\n\n\n\nwtf: #{attack_params}\n\n\n\n"
     respond_to do |format|
       if @attack.update(attack_params)
         format.html { redirect_to @attack, notice: 'Attack was successfully updated.' }
@@ -393,6 +401,7 @@ class AttacksController < ApplicationController
       conn = Faraday.new(:url => url)
       response = conn.get
     rescue Faraday::ConnectionFailed => e
+      p "\n\nhere is the URL #{url}\n\n\n"
       return "Unknown. Requires attention."
     else
       statusNum = response.status
@@ -400,6 +409,10 @@ class AttacksController < ApplicationController
         return "Online"
       elsif (statusNum == 403)
         return "Access Forbidden"
+      elsif (statusNum == 302)
+        status = "Redirecting"
+      elsif (statusNum == 301)
+        status = "Moved Permanantly"
       else
         return"Status code: #{statusNum}"
       end
@@ -415,6 +428,8 @@ class AttacksController < ApplicationController
         dem_params[i] = ':'
       elsif dem_params[i] == '>'
         dem_params[i] = ''
+      elsif dem_params[i] == '\''
+        dem_params[i] = '"'
       else
       end
       i = i+1
