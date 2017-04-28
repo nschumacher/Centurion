@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423234810) do
+ActiveRecord::Schema.define(version: 20170428082906) do
 
   create_table "attacks", force: :cascade do |t|
     t.string   "url"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20170423234810) do
     t.string   "registrationDate"
     t.string   "expireryDate"
     t.string   "target"
+    t.string   "image"
+    t.string   "whois_text"
   end
 
   create_table "cases", force: :cascade do |t|
@@ -38,6 +40,13 @@ ActiveRecord::Schema.define(version: 20170423234810) do
   end
 
   create_table "isps", force: :cascade do |t|
+    t.string   "name"
+    t.string   "attackID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "registrants", force: :cascade do |t|
     t.string   "name"
     t.string   "attackID"
     t.datetime "created_at", null: false
