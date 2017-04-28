@@ -65,7 +65,7 @@ class AttacksController < ApplicationController
         puts "\n==== 2 ==== "
         respond_to do |format|
 
-          # format.js
+         #format.js
          format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
         end
       end
@@ -101,7 +101,7 @@ class AttacksController < ApplicationController
 
       @attack = Attack.new
       respond_to do |format|
-          # format.js
+          #format.js
           format.html
       end
   end
@@ -152,7 +152,7 @@ class AttacksController < ApplicationController
     myURL = urlSlash
     puts "\n====="
 
-
+    # add http:// if it isn't there
     if myURL[0..3] == "www."
       tURL = "http://" + myURL
       myURL = tURL
@@ -161,15 +161,13 @@ class AttacksController < ApplicationController
       myURL = tURL
     else end
 
-    #puts "\n.#{myURL}.\n"
-
     # Check the status
     status = check_url_status(myURL)
 
 
-        #### live here ####
-     puts "\n====="
-     puts "Starting myURL: " + myURL + "\n"
+    #### live here ####
+    puts "\n====="
+    puts "Starting myURL: " + myURL + "\n"
 
     # check for http and https then check for www
     newURL = myURL
@@ -252,18 +250,18 @@ class AttacksController < ApplicationController
       rstOrg = rstStruct[0]['organization']
       rstEmail = rstStruct[0]['email']
     rescue
-      rstName = "Couldn't get registrant info"
+      rstName = "unknown"
       @allWhois += rstName + " \n"
     else
       if rstName != nil
         @allWhois += "Registrant Name: " + rstName + " \n"
-      else end
+      end
       if rstOrg != nil
         @allWhois += "Registrant Org: " + rstOrg + " \n"
-      else end
+      end
       if rstEmail != nil
         @allWhois += "Registrant Email: " + rstEmail + " \n"
-      else end
+      end
       #puts @rstStruct
     end
 
@@ -324,7 +322,7 @@ class AttacksController < ApplicationController
         nni2 = nni2+nni
         netName = networkWhois[nni..nni2]
       rescue
-        netName = "NetName not available \n"
+        netName = "unknown"
       else
         @allWhois += "NetName: " + netName
       end
@@ -338,7 +336,7 @@ class AttacksController < ApplicationController
         nhi2 = nhi2 + nhi
         netHandle = networkWhois[nhi..nhi2]
       rescue
-        netHandle = "NetHandle not available \n"
+        netHandle = "unknown"
       else
         @allWhois += "NetHandle: " + netHandle
       end
@@ -352,7 +350,7 @@ class AttacksController < ApplicationController
         on2 = on2 + on
         orgName = networkWhois[on..on2]
       rescue
-        orgName = "OrgName not available \n"
+        orgName = "unknown"
       else
         @allWhois += "OrgName: " + orgName
       end
@@ -362,7 +360,7 @@ class AttacksController < ApplicationController
     begin
       ns = p.nameservers
     rescue
-      ns = "Unable to retrieve nameserver information \n"
+      ns = "unknown"
     else
       i = 0
       while ns[i] != nil do
@@ -376,6 +374,51 @@ class AttacksController < ApplicationController
     puts "\n"
     #### end of Whois Retrevial ####
 
+#--------------------------------- Start of creation ----------------------------------------------
+    # Create the Registrar
+    registrar_name = ""
+    if rarName != nil
+      registrar_name = rarName
+    else
+      registrar_name = "Unknown"
+    end
+    Registrar.create(name: registrar_name, attackID: params[:attack][:attackID])
+
+    # Create the ISP
+    isp_name = ""
+    if orgName != "unknown"
+      isp_name = orgName
+    elsif netHandle != "unknown"
+      isp_name = netHandle
+    elsif netName != "unknown"
+      isp_name = netName
+    else
+      isp_name = "unknown"
+    end
+    Isp.create(name: isp_name, attackID: params[:attack][:attackID])
+
+    # Create the Webhost(s)
+    if ns[0] != "unknown"
+      i = 0
+      while ns[i] != nil do
+        webhost_name = ns[i].to_s
+        Webhost.create(name: webhost_name, attackID: params[:attack][:attackID])
+        i += 1
+      end
+    else
+      webhost_name = "unknown"
+      Webhost.create(name: webhost_name, attackID: params[:attack][:attackID])
+    end
+
+    # Create the Registrant
+    if rstName != "unknown"
+      registrant_name = rstName
+      Registrant.create(name: registrant_name, attackID: params[:attack][:attackID])
+    else
+      registrant_name = "unknown"
+      Registrant.create(name: registrant_name, attackID: params[:attack][:attackID])
+    end
+
     # create the attack with the new status parameter
     @attack = Attack.new(attack_params.merge(
       :status => status,
@@ -384,11 +427,7 @@ class AttacksController < ApplicationController
       :expireryDate => @expiresOn,
       :notes => @allWhois
     ))
-
-    # @case = Case.new(params[:caseID])
-    # @case.attackID = @attack.attackID
-    # @case.caseID = @attack.caseID
-    # @case.target = @attack.target
+#--------------------------------- End of creation ----------------------------------------------
 
     respond_to do |format|
       if @attack.save
