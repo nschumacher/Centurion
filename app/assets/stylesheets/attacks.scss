@@ -3,8 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "color_palette";
 @import "sidebar_nav";
-@import url('https://fonts.googleapis.com/css?family=Cinzel');
-@import url('https://fonts.googleapis.com/css?family=PT+Sans|Philosopher');
+// @import url('https://fonts.googleapis.com/css?family=Cinzel');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans|Philosopher|Raleway:500|Cinzel');
 
 .URL {
   overflow: hidden;
@@ -18,7 +18,8 @@
   // background: $dark_alt_1; /* For browsers that do not support gradients */
   // color: $gold_alt_1;
   color: $gray_alt_5;
-  font-family: 'Philosopher', sans-serif;
+  // font-family: 'Philosopher', sans-serif;
+  font-family: 'Raleway', sans-serif;
   background-size: contain;
   background-repeat: no-repeat;
   min-height: 90vh;
@@ -55,7 +56,7 @@ table {
     text-shadow: $text_shadow_default;
     text-align: center;
     border-color: $red !important;
-    // font-family: 'Cinzel', serif !important;
+    font-family: 'Raleway', sans-serif;
     font-size: 1.2em;
   }
   #header_row:hover {
