@@ -54,8 +54,12 @@
       <%= f.text_field :notes, :class => "form-control input-lg", :placeholder => "Type any additional notes here...", :style=>"height:100%"%>
       
     </div>
-    <%#= button_to 'Back', attacks_path, :class=>"btn btn-lg pull-right", :style=>"padding:7px 20px; margin-top:3%; margin-left: 1%"%>
 
+    <div class="field">
+      add an image....
+      <%= f.file_field :image %>
+    </div>
+    
     <div class="actions">
       <%= link_to '<button type="button" class="btn btn-lg pull-right" style="padding:7px 20px; margin-top:3%; margin-left: 1%">Cancel</button>'.html_safe, attacks_path%>
       <%= f.submit :class=>"btn btn-lg pull-right", :style=>"padding:7px; margin-top:3%;"%>
