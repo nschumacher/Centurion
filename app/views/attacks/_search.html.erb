@@ -1,11 +1,14 @@
+<!-- <p id="notice"><%#= notice %></p> -->
 
+<div class="row">
+  <div class="col-xs-12" style="padding-right: 0px;">
+    <div class="page_content" id="page_content">
       <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-4 buttons">
-          <a class="_button" href="#" role="button">Check Status</a>
-          <%= link_to 'New Attack', new_attack_path, :class=>'_button', :remote => true %>
+          <%= link_to '+', new_attack_path, :class=>'_button' %>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-5">
-          <%= form_tag search_attacks_path, method: :get, class: "input-group", style:"width: 100%", :remote => true do %>
+          <%= form_tag search_attacks_path, method: :get, class: "input-group", style:"width: 100%" do %>
 							<%= button_tag(type: "submit", class: "glyphicon glyphicon-search", id: "search_button") do %>
 							<% end %>
 							<%= text_field_tag :search, params[:search], class:"form-control search_box", placeholder:"Search for a case" %>
@@ -16,8 +19,8 @@
         <thead>
           <tr id="header_row">
             <th>Status</th>
-            <th><div align="center" style="width:100%">Url</div></th>
-            <th>Case ID</th>
+            <th><div align="center" style="width:100%">URL</div></th>
+            <th>Attack ID</th>
             <th>Target</th>
             <th>Detection Time</th>
           </tr>
@@ -25,11 +28,12 @@
 
         <tbody>
           <% @attacks.each do |attack| %>
-              <!-- <tr class='clickable-row' data-href='/attacks/<%=attack.id%>'> -->
-              <tr>
-                <td><%= attack.status %> <%= link_to 'Show', attack_path(:id => attack.id), :remote => true %></td></a>
+              <tr class="clickable-row" data-href="/attacks/<%=attack.id%>">
+                <td><%= attack.status %>
                 <td align="center"><div class="URL" align="center"><%= attack.url %></div></td>
-                <td><%= attack.caseID %></td>
+                <td>
+                  <%= attack.attackID %>
+                </td>
                 <td><%= attack.target %></td>
                 <td><%= attack.registrationDate %></td>
               </tr>
@@ -38,7 +42,9 @@
       </table>
       <!-- render page links in the view: -->
       <%= will_paginate @posts %>
-
+    </div>
+  </div>
+</div>
 
 <script>
 // makes the table rows clickable
