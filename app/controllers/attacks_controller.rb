@@ -4,11 +4,11 @@ class AttacksController < ApplicationController
   # GET /attacks
   # GET /attacks.json
   def index
-    @attacks = Attack.paginate(:page => params[:page], :per_page => 14)
+    @attacks = Attack.paginate(:page => params[:page], :per_page => 15)
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -16,14 +16,14 @@ class AttacksController < ApplicationController
   # Searching for attacks
   def search
     if params[:search].present?
-        @attacks = Attack.search(params[:search], page: params[:page], per_page: 14)
+        @attacks = Attack.search(params[:search], page: params[:page], per_page: 15)
     else
       @attacks = nil
     end
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -33,27 +33,51 @@ class AttacksController < ApplicationController
   # GET /attacks/1.json
   def show
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
 
   def check
+    @lastAttackID = Attack.order("created_at").last.attackID
+    @lastAttackID[0]=""
+    @lastAttackID[0]=""
+    @lastAttackID = @lastAttackID.to_i
+    @lastAttackID = @lastAttackID + 1
+    @lastAttackID.to_s
+    @lastAttackID = "AX#{@lastAttackID}"
     @myURL = params[:attack][:url]
     #puts @myURL
     #/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/
     matchData = @myURL.to_s.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
+    puts "1 matchData: " + matchData
+
     if matchData.length == 0
-      respond_to do |format|
-      format.js
-       format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
+      puts "\n==== 1 ==== "
+      matchData = @myURL.to_s + "/"
+      puts "2 matchData: " + matchData
+
+      matchData = matchData.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
+
+      puts "3 matchData: " + matchData
+
+      if matchData.length == 0
+        puts "\n==== 2 ==== "
+        respond_to do |format|
+
+          # format.js
+         format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
+        end
       end
-    else
-      #puts matchData
+
+    end
+      puts "\ns============="
+      puts "matchData: " + matchData
       urlOnly = matchData.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)/).to_s
-      #puts urlOnly
+      puts "urlOnly: " + urlOnly
       foldersOnly = matchData[urlOnly.length..matchData.length]
-      #puts foldersOnly
+      puts "folderOnly: " + foldersOnly
+      puts "=============\n"
 
       if foldersOnly.length > 1 #there is at least one /../
         foldersOnly[0] = ''
@@ -89,11 +113,10 @@ class AttacksController < ApplicationController
 
       @attack = Attack.new
       respond_to do |format|
-          format.js
+          # format.js
           format.html
       end
-    end
-  end  
+  end
 
   # GET /attacks/new
   def new
@@ -110,7 +133,7 @@ class AttacksController < ApplicationController
 
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -119,7 +142,7 @@ class AttacksController < ApplicationController
   def edit
     # allow for ajax
     respond_to do |format|
-      format.js
+      # format.js
       format.html
     end
   end
@@ -133,14 +156,53 @@ class AttacksController < ApplicationController
     # Parse the fixed parameters and extract the URL
     attackJson = JSON.parse(fixed_params)
     myURL = attackJson["url"]
+
+    # removing trailing /
+    puts "\n====="
+    urlSlash = myURL.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)/).to_s
+    puts "urlSlash: " + urlSlash
+    myURL = urlSlash
+    puts "\n====="
+
+
+    if myURL[0..3] == "www."
+      tURL = "http://" + myURL
+      myURL = tURL
+    elsif myURL[0..3] != "http"
+      tURL = "http://" + myURL
+      myURL = tURL
+    else end
+
     #puts "\n.#{myURL}.\n"
 
     # Check the status
     status = check_url_status(myURL)
 
-    myURL = myURL[7..-1]
 
-    #### live here ####
+        #### live here ####
+     puts "\n====="
+     puts "Starting myURL: " + myURL + "\n"
+
+    # check for http and https then check for www
+    newURL = myURL
+
+    if newURL[0..4] == "https"
+      newURL = newURL[8..-1]
+    elsif newURL[0..3] == "http"
+      newURL = newURL[7..-1]
+    else end
+
+    if newURL[0..3] == "www."
+      newURL = newURL[4..-1]
+    else end
+
+     puts "====="
+     puts "newURL: " + newURL
+     puts "====="
+
+    myURL = newURL
+
+
     @allWhois = "\n"
 
     # ------ Domain ------ #
@@ -354,6 +416,7 @@ class AttacksController < ApplicationController
   # PATCH/PUT /attacks/1
   # PATCH/PUT /attacks/1.json
   def update
+    puts "\n\n\n\nwtf: #{attack_params}\n\n\n\n"
     respond_to do |format|
       if @attack.update(attack_params)
         format.html { redirect_to @attack, notice: 'Attack was successfully updated.' }
@@ -405,6 +468,7 @@ class AttacksController < ApplicationController
       conn = Faraday.new(:url => url)
       response = conn.get
     rescue Faraday::ConnectionFailed => e
+      p "\n\nhere is the URL #{url}\n\n\n"
       return "Unknown. Requires attention."
     else
       statusNum = response.status
@@ -412,6 +476,10 @@ class AttacksController < ApplicationController
         return "Online"
       elsif (statusNum == 403)
         return "Access Forbidden"
+      elsif (statusNum == 302)
+        status = "Redirecting"
+      elsif (statusNum == 301)
+        status = "Moved Permanantly"
       else
         return"Status code: #{statusNum}"
       end
@@ -427,6 +495,8 @@ class AttacksController < ApplicationController
         dem_params[i] = ':'
       elsif dem_params[i] == '>'
         dem_params[i] = ''
+      elsif dem_params[i] == '\''
+        dem_params[i] = '"'
       else
       end
       i = i+1
