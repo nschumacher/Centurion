@@ -11,18 +11,23 @@
         <li class="active">Attack ID: <%= @attack.attackID %></li>
       </ol>
       <!-- Status and URL -->
+      <div class="container">
       <div class="row">
         <div class="col-xs-4" id="status_box">
           <img src="/assets/green_check.png" alt="OK" class="img-circle status_img">
           <span style="margin-left:10px; font-size:1.2em">Status: <span class="info"><%= @attack.status %></span></span><br>
           <span style="margin-left:10px; font-size:.7em">Last check: <span class="info">7FEB2017</span></span>
           <%#= link_to 'Update Status', update_status_attacks_path(@attack) %>
-            <%=form_for :attack, url: url_for( :controller => :attacks, :action => :update_status), :method => :get do |f| %>
-              <%= f.hidden_field :url, :value => @attack.url %>
-              <%= f.hidden_field :id, :value => @attack.id %>
-              <div class="actions btn">
-                <%= f.submit "Update Status" %>
-              </div>
+            <% if user_signed_in? %>
+              <%=form_for :attack, url: url_for( :controller => :attacks, :action => :update_status), :method => :get do |f| %>
+                <%= f.hidden_field :url, :value => @attack.url %>
+                <%= f.hidden_field :id, :value => @attack.id %>
+                <div class="actions btn">
+                  <%= f.submit "Update Status" %>
+                </div>
+              <% end %>
+            <% else %>
+              <%= link_to '<button type="button" class="btn _button pull-left" style="margin-left: 10px;"><span class="glyphicon glyphicon-refresh pull-right" style="margin-left:7px"  aria-hidden="true"></span>Update Status</button>'.html_safe, new_user_session_path %>
             <% end %>
         </div>
         <div class="col-xs-8" id="url_box">
@@ -41,48 +46,48 @@
           <div class="row">
             <div class="col-xs-6">
               <div class="info_box well">
-                Attack ID: <%= @attack.attackID %>
+                <span class="gold">Attack ID:</span> <% if @attack.attackID.blank?%>Unavailable<% end %><%= @attack.attackID %>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Date Recorded: <%= @attack.created_at %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">
-              <div class="info_box well">
-                Domain: <%= @attack.domain %>
-              </div>
-            </div>
-            <div class="col-xs-6">
-              <div class="info_box well">
-                Last Status Check: <%= @attack.registrationDate %>
+                <span class="gold">Date Recorded:</span> <% if @attack.created_at.blank?%>Unavailable<% end %><%= @attack.created_at %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-6">
               <div class="info_box well">
-                Registration Date: <%= @attack.registrationDate %>
+                <span class="gold">Domain:</span> <% if @attack.domain.blank?%>Unavailable<% end %><%= @attack.domain %>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Expiry Date: <%= @attack.expireryDate %>
+                <span class="gold">Last Status Check:</span> <% if @attack.registrationDate.blank?%>Unavailable<% end %><%= @attack.registrationDate %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-6">
               <div class="info_box well">
-                Target: <%= @attack.target %>
+                <span class="gold">Registration Date:</span> <% if @attack.registrationDate.blank?%>Unavailable<% end %><%= @attack.registrationDate %>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="info_box well">
-                Function: <%= @attack.functionality %>
+                <span class="gold">Expiry Date:</span> <% if @attack.expireryDate.blank?%>Unavailable<% end %><%= @attack.expireryDate %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="info_box well">
+                <span class="gold">Target:</span> <% if @attack.target.blank?%>Unavailable<% end %><%= @attack.target %>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div class="info_box well">
+                <span class="gold">Function:</span> <% if @attack.functionality.blank?%>Unavailable<% end %><%= @attack.functionality %>
               </div>
             </div>
           </div>
@@ -120,9 +125,14 @@
 
 
 
-
-      <%= link_to 'Edit', edit_attack_path(@attack) %> |
-      <%= link_to 'Back', attacks_path %>
+       <% if user_signed_in? %>
+          <%= link_to '<button type="button" class="btn btn-lg pull-right _button" style="padding:7px 20px; margin-top:3%; margin-left: 1%"><span class="glyphicon glyphicon-pencil pull-right" style="margin-left:7px"  aria-hidden="true"></span>Edit Attack</button>'.html_safe, edit_attack_path(@attack) %>
+       <% else %>
+          <%= link_to '<button type="button" class="btn btn-lg pull-right _button" style="padding:7px 20px; margin-top:3%; margin-left: 1%"><span class="glyphicon glyphicon-pencil pull-right" style="margin-left:7px" aria-hidden="true"></span>Edit Attack</button>'.html_safe, new_user_session_path%>
+       <% end %>
+       <%= link_to '<button type="button" class="btn btn-lg pull-left _button" style="padding:7px 20px; margin-top:3%; margin-left: 1%"><span class="glyphicon glyphicon-arrow-left pull-left" style="margin-right:7px"  aria-hidden="true"></span>Back</button>'.html_safe,  attacks_path %>
+       </div>
+      <%#= link_to 'Back', attacks_path %>
     <!--</div>
     </div>
 </div> -->

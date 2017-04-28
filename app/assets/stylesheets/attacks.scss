@@ -46,6 +46,13 @@
   display: none;
 
 }
+.gold {
+  color: $gold_alt_1;
+  font-weight: bold;
+}
+.info_box{
+  word-break: break-all;
+}
 table {
   // color: $gold_alt_1;
   color: $gray_alt_5;
