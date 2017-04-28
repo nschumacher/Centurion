@@ -454,6 +454,8 @@ class AttacksController < ApplicationController
   # PATCH/PUT /attacks/1.json
   def update
     puts "\n\n\n\nwtf: #{attack_params}\n\n\n\n"
+    @myURL = Attack.find(params[:id]).url
+    @attackMode = "Editing"
     respond_to do |format|
       if @attack.update(attack_params)
         format.html { redirect_to @attack, notice: 'Attack was successfully updated.' }
