@@ -1,3 +1,4 @@
+<div class="container">
 <%= form_for(@attack) do |f| %>
   <% if @attack.errors.any? %>
     <div id="error_explanation">
@@ -11,39 +12,48 @@
     </div>
   <% end %>
 
-  <h1>
-    <%= @lastAttackID %>
-    <%= @myURL %>
+  <div class="page-header">
+  <h1 class="text-center" style="word-break:break-word;">
+  	New Attack: <%= @lastAttackID %><br>
+    <small><%= @myURL %></small>
   </h1>
+  </div>
 
   <%= f.hidden_field :attackID, :value => @lastAttackID %>
+  	
   	<% if !@matches.nil? %>
   	<div>
-  		Did you mean?
+  		Related Attacks:
   		<br>
+  		<div class="well well-sm pre-scrollable">
   		<% @matches.each do |match|%>
-  			<%= match[:url] %> <br>
+  			<% atck = Attack.find(match[:id])%>
+  			<a href="/attacks/<%=atck.id%>"><%= match[:url] %></a> <br>
   		<% end %>
+  		</div>
   	</div>
   	<% end %>
+
     <div class="field">
-      <%= f.label :url %><br>
-      <%= f.text_field :url, :value => @myURL %>
+      <%= f.label :url, :class => "h3"%><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="padding-left: 3px"></span><br>
+      <%= f.text_field :url, :value => @myURL, :class => "form-control input-lg" %>
     </div>
     <div class="field">
-      <%= f.label :functionality %><br>
+      <%= f.label :functionality, :class => "h3" %><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="padding-left: 3px"></span><br>
       <%#= f.text_field :functionality %>
-      <%= f.select :functionality, options_for_select([['Landing Page'], ['Redirection'], ['Drop Point'], ['Secondary Attack Page']])%>
+      <%= f.select(:functionality, ['Landing Page','Redirection','Drop Point','Secondary Attack Page'],{}, { :class => "form-control input-lg"})%>
     </div>
     <div class="field">
-      <%= f.label :target %><br>
-      <%= f.text_field :target %>
+      <%= f.label :target, :class => "h3" %><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="padding-left: 3px"></span><br>
+      <%= f.text_field :target, :class => "form-control input-lg" , :placeholder => "Target"%>
     </div>
     <div class="field">
-      <%= f.label :notes %><br>
-      <%= f.text_field :notes %>
+      <%= f.label :notes, :class => "h3" %><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="padding-left: 3px"></span><br> 
+      <%= f.text_field :notes, :class => "form-control input-lg", :placeholder => "Type any additional notes here...", :style=>"height:100%"%>
+      
     </div>
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit :class=>"btn btn-lg pull-right", :style=>"padding:7px; margin-top:3%;"%>
     </div>
 <% end %>
+</div>
