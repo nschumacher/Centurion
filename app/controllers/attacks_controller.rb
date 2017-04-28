@@ -121,12 +121,207 @@ class AttacksController < ApplicationController
     # Parse the fixed parameters and extract the URL
     attackJson = JSON.parse(fixed_params)
     myURL = attackJson["url"]
+    #puts "\n.#{myURL}.\n"
 
     # Check the status
     status = check_url_status(myURL)
 
+    myURL = myURL[7..-1]
+
+    #### live here ####
+    @allWhois = "\n"
+
+    # ------ Domain ------ #
+    begin
+      mywhois = Whois.whois(myURL)
+      p = mywhois.parser
+      @dom = p.domain
+      @allWhois += "Domain:" + @dom +" \n"
+    rescue
+      @dom = "\nDomain not retrieved \n"
+    else
+    end
+
+    # ------ IP ------ #
+    begin
+      ip = IPSocket::getaddress(myURL)
+    rescue
+      ip = "Network Whois unreachable :( \n"
+      @allWhois += ip
+    else
+      @allWhois += "IP Address: " + ip + " \n"
+    end
+
+    # ------ Domain creation and expiration ------ #
+    begin
+      @createdOn = p.created_on
+      @expiresOn = p.expires_on
+      avail = p.available?
+      reg = p.registered?
+
+      # if @createdOn == ""
+      #   #puts "\n CREATION WAS EMPTY\n"
+      #   @createdOn = "NA"
+      #   @expiresOn = "NA"
+      # elsif @createdOn == nil
+      #   @createdOn = "NA"
+      #   @expiresOn = "NA"
+      # else
+      #   puts "\nIf it's not empty... what in it? .#{@createdOn}. "
+      # end
+    rescue
+      #puts "\nDomain creation/expiration dates NA\n"
+      @createdOn = "Creation date unavailable"
+      @expiresOn = "Expiration date unavailable"
+      @allWhois += "Created On: "+ @createdOn.to_s + " \n" + "Expires On: " + @expiresOn.to_s + " \n"
+
+    else
+      @allWhois += "Created On: "+ @createdOn.to_s + " \n" + "Expires On: " + @expiresOn.to_s + " \n"
+      # puts "Creation date: #{@createdOn}"
+      # puts "Expiration date: #{@expiresOn}"
+    end
+
+    @allWhois += " \n"
+
+    # ------ Registrant ------ #
+    begin
+      rstStruct = p.registrant_contacts
+      rstName = rstStruct[0]['name']
+      rstOrg = rstStruct[0]['organization']
+      rstEmail = rstStruct[0]['email']
+    rescue
+      rstName = "Couldn't get registrant info"
+      @allWhois += rstName + " \n"
+    else
+      if rstName != nil
+        @allWhois += "Registrant Name: " + rstName + " \n"
+      else end
+      if rstOrg != nil
+        @allWhois += "Registrant Org: " + rstOrg + " \n"
+      else end
+      if rstEmail != nil
+        @allWhois += "Registrant Email: " + rstEmail + " \n"
+      else end
+      #puts @rstStruct
+    end
+
+    @allWhois += " \n"
+
+    # ------ Registrar ------ #
+    begin
+      rarstruct = p.registrar
+      rarName = p.registrar['name']
+      rarOrg = p.registrar['organization']
+      rarID = p.registrar['id']
+    rescue
+      rarName = "Couldn't retrieve registrar info"
+      @allWhois += "Registrar Name: " + rarName + " \n"
+    else
+      if rarName != nil
+        @allWhois += "Registrar Name: " + rarName + " \n"
+      else end
+      if rarOrg != nil
+        @allWhois += "Registrar Org: " + rarOrg + " \n"
+      else end
+      if rarID != nil
+        @allWhois += "Registrar ID: " + rarID + " \n"
+      else end
+    end
+
+    @allWhois += " \n"
+
+    # ------ IP ------ #
+    # begin
+    #   @ip = Resolv.getaddresses(myURL)
+    # rescue
+    #   @ip = "The IP broke Scottie! \n"
+    #   #@allWhois += @ip
+    # else
+    #   @allWhois += "IP Address: " + @ip + " \n"
+    # end
+
+
+    # --- ISP --- #
+    begin
+      ccc = Whois::Client.new
+      networkWhois = ccc.lookup(ip)
+
+      networkWhois = networkWhois.to_s
+
+      #puts "\n\nNetWhois: " + networkWhois + "\nend\n"
+
+    rescue
+      puts "\nCouldn't retrieve Network whois \n"
+    else
+      ###### NetName ######
+      begin
+        nni = networkWhois.index(/NetName:/)
+        nni = nni+9
+        temp = networkWhois[nni..-1]
+        nni2 = temp.index(/\n/)
+        nni2 = nni2+nni
+        netName = networkWhois[nni..nni2]
+      rescue
+        netName = "NetName not available \n"
+      else
+        @allWhois += "NetName: " + netName
+      end
+
+      ###### NetHandle #######
+      begin
+        nhi = networkWhois.index(/NetHandle:/)
+        nhi = nhi+11
+        temp = networkWhois[nhi..-1]
+        nhi2 = temp.index(/\n/)
+        nhi2 = nhi2 + nhi
+        netHandle = networkWhois[nhi..nhi2]
+      rescue
+        netHandle = "NetHandle not available \n"
+      else
+        @allWhois += "NetHandle: " + netHandle
+      end
+
+      ###### OrgName #######
+      begin
+        on = networkWhois.index(/OrgName:/)
+        on = on+9
+        temp = networkWhois[on..-1]
+        on2 = temp.index(/\n/)
+        on2 = on2 + on
+        orgName = networkWhois[on..on2]
+      rescue
+        orgName = "OrgName not available \n"
+      else
+        @allWhois += "OrgName: " + orgName
+      end
+    end
+
+    # ====== Nameservers ====== #
+    begin
+      ns = p.nameservers
+    rescue
+      ns = "Unable to retrieve nameserver information \n"
+    else
+      i = 0
+      while ns[i] != nil do
+        @allWhois += "Nameserver #{i}: " + ns[i].to_s + "\n"
+        i += 1
+      end
+    end
+
+    puts "\n"
+    puts @allWhois
+    puts "\n"
+    #### end of Whois Retrevial ####
+
     # create the attack with the new status parameter
-    @attack = Attack.new(attack_params.merge(:status => status))
+    @attack = Attack.new(attack_params.merge(
+      :status => status,
+      :domain => @dom,
+      :registrationDate => @createdOn,
+      :expireryDate => @expiresOn,
+      :notes => @allWhois
+    ))
 
     # @case = Case.new(params[:caseID])
     # @case.attackID = @attack.attackID
@@ -206,7 +401,7 @@ class AttacksController < ApplicationController
       elsif (statusNum == 403)
         return "Access Forbidden"
       else
-        return"Unknown. Requires attention."
+        return"Status code: #{statusNum}"
       end
     end
   end
@@ -235,6 +430,6 @@ class AttacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attack_params
-      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate, :notes)
+      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate,:expireryDate, :notes)
     end
 end

@@ -30,6 +30,9 @@ gem 'bootstrap-sass'
 # Faraday for http status check
 gem 'faraday'
 gem 'json'
+gem 'whois'
+gem 'whois-parser'
+#gem 'resolv'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
