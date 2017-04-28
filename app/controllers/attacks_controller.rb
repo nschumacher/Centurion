@@ -139,7 +139,18 @@ class AttacksController < ApplicationController
   # POST /attacks.json
   def create
     # replace the "=>" in the params with ':'
-    fixed_params = clean_my_params(params[:attack].to_s)
+    remove_image_params = params[:attack]
+    image_param = params[:attack][:image]
+    remove_image_params.delete :image
+    fixed_params = clean_my_params(remove_image_params.to_s)
+
+    # fixed_params = remove_image_params
+    puts "\n\n\n\n==============="
+    puts fixed_params.inspect
+    # for fixed_params[0..6] do |key,value|
+    #   puts "Param #{key}: #{value}\n\n"
+    # end
+    puts "\n\n\n\n==============="
 
     # Parse the fixed parameters and extract the URL
     attackJson = JSON.parse(fixed_params)
@@ -425,7 +436,8 @@ class AttacksController < ApplicationController
       :domain => @dom,
       :registrationDate => @createdOn,
       :expireryDate => @expiresOn,
-      :notes => @allWhois
+      :notes => @allWhois,
+      :image => image_param
     ))
 #--------------------------------- End of creation ----------------------------------------------
 
@@ -539,6 +551,6 @@ class AttacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attack_params
-      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate,:expireryDate, :notes)
+      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate,:expireryDate, :notes, :image)
     end
 end

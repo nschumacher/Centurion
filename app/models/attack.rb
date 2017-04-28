@@ -9,6 +9,9 @@ class Attack < ActiveRecord::Base
 
   accepts_nested_attributes_for :case
 
+  # for image uploading
+  mount_uploader :image, ImageUploader
+
   # set keys
   #self.primary_key = 'attackID'
 
