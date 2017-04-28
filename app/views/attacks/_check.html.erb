@@ -55,7 +55,9 @@
       
     </div>
     <%#= button_to 'Back', attacks_path, :class=>"btn btn-lg pull-right", :style=>"padding:7px 20px; margin-top:3%; margin-left: 1%"%>
+
     <div class="actions">
+      <%= link_to '<button type="button" class="btn btn-lg pull-right" style="padding:7px 20px; margin-top:3%; margin-left: 1%">Cancel</button>'.html_safe, attacks_path%>
       <%= f.submit :class=>"btn btn-lg pull-right", :style=>"padding:7px; margin-top:3%;"%>
     </div>
 <% end %>
