@@ -50,42 +50,24 @@ class AttacksController < ApplicationController
     @attackMode = "New"
     #puts @myURL
     #/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/
-    matchData = @myURL.to_s.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
-    puts "1 matchData: " + matchData
-
+    matchData = @myURL.to_s.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)/).to_s
     if matchData.length == 0
-      puts "\n==== 1 ==== "
-      matchData = @myURL.to_s + "/"
-      puts "2 matchData: " + matchData
-
-      matchData = matchData.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
-
-      puts "3 matchData: " + matchData
-
-      if matchData.length == 0
-        puts "\n==== 2 ==== "
-        respond_to do |format|
-
-          # format.js
-         format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
-        end
+      respond_to do |format|
+       format.js
+       format.html { redirect_to new_attack_url, warn: 'Invalid URL' }
       end
-
-    end
-      puts "\ns============="
-      puts "matchData: " + matchData
+     else
+      #puts matchData'
+      matchData << "//"
       urlOnly = matchData.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)/).to_s
-      puts "urlOnly: " + urlOnly
+      #puts urlOnly
       foldersOnly = matchData[urlOnly.length..matchData.length]
-      puts "folderOnly: " + foldersOnly
-      puts "=============\n"
-
+      #puts foldersOnly
       if foldersOnly.length > 1 #there is at least one /../
         foldersOnly[0] = ''
         folders = foldersOnly.split('/')
         #p folders
-        #puts folders.length
-
+        #puts folders.lengt
         @matches = Array.new
         results = Attack.where("url LIKE ?", "#{urlOnly}%")
         results.each do |result|
@@ -106,18 +88,19 @@ class AttacksController < ApplicationController
               @matches.push(result)
             end
           end
-        end
         #p @matches
-      else # either an empty address or only an empty address + /
-
+        end
+      else# either an empty address or only an empty address + /
       end
-
+      @matches.sort!
       @attack = Attack.new
       respond_to do |format|
-          # format.js
+          #format.js
           format.html
       end
-  end
+    end
+  end  
+ 
 
   # GET /attacks/new
   def new
