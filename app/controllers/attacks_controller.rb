@@ -436,7 +436,7 @@ class AttacksController < ApplicationController
       :domain => @dom,
       :registrationDate => @createdOn,
       :expireryDate => @expiresOn,
-      :notes => @allWhois,
+      :whois_text => @allWhois,
       :image => image_param
     ))
 #--------------------------------- End of creation ----------------------------------------------
@@ -551,6 +551,6 @@ class AttacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attack_params
-      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate,:expireryDate, :notes, :image)
+      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate,:expireryDate, :notes, :image, :whois_text)
     end
 end

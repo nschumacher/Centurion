@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428060821) do
+ActiveRecord::Schema.define(version: 20170428082906) do
 
   create_table "attacks", force: :cascade do |t|
     t.string   "url"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20170428060821) do
     t.string   "expireryDate"
     t.string   "target"
     t.string   "image"
+    t.string   "whois_text"
   end
 
   create_table "cases", force: :cascade do |t|
