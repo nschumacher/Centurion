@@ -62,13 +62,25 @@ class AttacksController < ApplicationController
         #puts folders.length
 
         @matches = Array.new
-        @matches.push(Attack.where("url LIKE ?", "#{urlOnly}%"))
+        results = Attack.where("url LIKE ?", "#{urlOnly}%")
+        results.each do |result|
+          if !@matches.collect{|match| match.url}.include? result[:url]
+            @matches.push(result)
+          end
+        end
+        # @matches.push(Attack.where("url LIKE ?", "#{urlOnly}%"))
         urlOnly << '/'
 
         folders.each do |folder|
           urlOnly << folder << '/'
           #puts urlOnly
-          @matches.push(Attack.where("url LIKE ?", "#{urlOnly}%"))
+          # @matches.push(Attack.where("url LIKE ?", "#{urlOnly}%"))
+          results = Attack.where("url LIKE ?", "#{urlOnly}%")
+          results.each do |result|
+            if !@matches.collect{|match| match.url}.include? result[:url]
+              @matches.push(result)
+            end
+          end
         end
         #p @matches
       else # either an empty address or only an empty address + /

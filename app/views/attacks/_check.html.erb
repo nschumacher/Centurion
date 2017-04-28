@@ -22,12 +22,7 @@
   		Did you mean?
   		<br>
   		<% @matches.each do |match|%>
-  			<% if match.any? %>
-	  			<% match.each do |find|%>
-	  				<%= find[:url] %>
-	  				<br>
-	  			<% end %>
-  			<% end %>
+  			<%= match[:url] %> <br>
   		<% end %>
   	</div>
   	<% end %>
