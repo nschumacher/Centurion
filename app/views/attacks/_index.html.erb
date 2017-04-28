@@ -5,7 +5,11 @@
     <div class="page_content" id="page_content">
       <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-4 buttons">
-          <%= link_to '+', new_attack_path, :class=>'_button' %>
+           <% if user_signed_in? %>
+              <%= link_to '<button type="button" class="btn _button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>'.html_safe, new_attack_path%>
+           <% else %>
+              <%= link_to '<button type="button" class="btn _button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>'.html_safe, new_user_session_path%>
+           <% end %>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-5">
           <%= form_tag search_attacks_path, method: :get, class: "input-group", style:"width: 100%" do %>
@@ -41,7 +45,9 @@
         </tbody>
       </table>
       <!-- render page links in the view: -->
+      <footer class="footer" style="min-height: 100%;">
       <%= will_paginate @posts %>
+      </footer>
     </div>
   </div>
 </div>
