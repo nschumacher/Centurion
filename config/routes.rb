@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users, :controllers => { registrations: 'registrations' }
   resources :webhosts
   resources :isps
   resources :registrars
   resources :cases
-  devise_for :users
   resources :attacks do
     collection do
       get 'search'
@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'update_status'
     end
   end
+
   get 'pages/about'
 
   get 'pages/contact', to: 'messages#new', as: 'contact'

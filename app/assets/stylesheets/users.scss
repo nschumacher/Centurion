@@ -1,0 +1,32 @@
+@import "color_palette";
+
+
+@input-border-focus = 2px solid $red_alt_1;
+
+input, optgroup, select, textarea {
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  border-bottom: 1px solid $red;
+  box-shadow: none !important;
+  color: $gold_alt_1;
+  width: 40% !important;
+  text-shadow: $text_shadow_default;
+  margin: 0px 0px 8px 0px;
+}
+input[type="checkbox"] {
+  width: 30px !important;
+}
+textarea:focus,
+input[type]:focus,
+.uneditable-input:focus {
+  color: $gold_alt_3;
+  border-bottom: 3px solid $red_alt_2 !important;
+}
+#delete {
+  width: 20% !important;
+  border: 3px solid $red_alt_3;
+}
+#update{
+  border: 3px solid $red_alt_3;
+}
