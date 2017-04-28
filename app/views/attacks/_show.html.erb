@@ -39,7 +39,12 @@
       <div class="row" style="font-size: 1.2em; margin-top: 20px">
         <div class="col-xs-12 col-sm-5">
           <div class="site_traffic_box well" align="center">
-            <%= image_tag(@attack.image_url.to_s, :style=>'height: 150px;')%>
+           <% if @attack.image_url.blank?%>
+           Screenshot currently unavailable.
+           <% else %>
+           <%= image_tag(@attack.image_url.to_s, :style=>'height: 150px;')%>
+           <% end %>
+            
           </div>
         </div>
         <div class="col-xs-12 col-sm-7">
@@ -96,8 +101,12 @@
 
       <div class="row" style="font-size: 1.2em">
         <div class="col-xs-12 col-sm-5">
-          <div class="site_traffic_box well">
-            Location box
+          <div class="panel well">
+            <strong> Notes: </strong> <br>
+            <pre>
+            <% if @attack.notes.blank?%>There are currently no notes on this attack.<% end %>
+            <%= @attack.notes %>
+            </pre>
           </div>
         </div>
         <div class="col-xs-12 col-sm-7">
@@ -108,9 +117,10 @@
         <div class="col-xs-12 col-sm-7 collapse" id="collapseExample">
           <div class="well2">
             <div class="row" style="margin: 0px 0px 0px 0px;">
-              <strong>Notes:</strong>
+              <strong>WhoIs Information:</strong>
                 <pre>
-                  <%= @attack.notes %>
+                   <% if @attack.whois_text.blank?%>WhoIs Information currently unavailable<% end %>
+                  <%= @attack.whois_text %>
                 </pre>
             </div>
           </div>
