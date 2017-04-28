@@ -463,26 +463,44 @@ class AttacksController < ApplicationController
   end
 
   # takes in a url as a string and returns the status string
+
   def check_url_status(url)
     begin
       conn = Faraday.new(:url => url)
       response = conn.get
     rescue Faraday::ConnectionFailed => e
-      p "\n\nhere is the URL #{url}\n\n\n"
       return "Unknown. Requires attention."
     else
       statusNum = response.status
-      if (statusNum == 200)
-        return "Online"
-      elsif (statusNum == 403)
-        return "Access Forbidden"
-      elsif (statusNum == 302)
-        status = "Redirecting"
-      elsif (statusNum == 301)
-        status = "Moved Permanantly"
+      puts case statusNum
+      when 200
+        return "200: Online"
+      when 201
+        return "201: Created"
+      when 204
+        return "204: No Content"
+      when 301
+        return "301: Moved Permanantly"
+      when 302
+        return "302: Redirecting"
+      when 304
+        return "304: Not Modified"
+      when 400
+        return "400: Bad Request"
+      when 401
+        return "401: Unauthorized"
+      when 403
+        return "403: Access Forbidden"
+      when 404
+        return "404: Not Found"
+      when 409
+        return "409: Conflict"
+      when 500
+        return "500: Internal Server Error"
       else
-        return"Status code: #{statusNum}"
+        return "Status code: #{statusNum}"
       end
+
     end
   end
 
@@ -512,6 +530,6 @@ class AttacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attack_params
-      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate,:expireryDate, :notes)
+      params.require(:attack).permit(:status, :caseID, :attackID, :target, :functionality, :url, :registrationDate,:expireryDate, :notes, :id)
     end
 end
