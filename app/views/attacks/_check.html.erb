@@ -14,14 +14,14 @@
 
   <div class="page-header">
   <h1 class="text-center" style="word-break:break-word;">
-  	New Attack: <%= @lastAttackID %><br>
+  	<%= @attackMode %> Attack: <%= @lastAttackID %><br>
     <small><%= @myURL %></small>
   </h1>
   </div>
 
   <%= f.hidden_field :attackID, :value => @lastAttackID %>
   	
-  	<% if !@matches.nil? %>
+  	<% if !@matches.nil? && @matches.any? %>
   	<div>
   		Related Attacks:
   		<br>
@@ -36,7 +36,9 @@
 
     <div class="field">
       <%= f.label :url, :class => "h3"%><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="padding-left: 3px"></span><br>
-      <%= f.text_field :url, :value => @myURL, :class => "form-control input-lg" %>
+      
+      <%= f.text_field :url, :value => @myURL, :class => "form-control input-lg", :readonly=>true%> <!-- This depends on if you want to give them the ability to change the URL post check -->
+      
     </div>
     <div class="field">
       <%= f.label :functionality, :class => "h3" %><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="padding-left: 3px"></span><br>
@@ -52,6 +54,7 @@
       <%= f.text_field :notes, :class => "form-control input-lg", :placeholder => "Type any additional notes here...", :style=>"height:100%"%>
       
     </div>
+    <%#= button_to 'Back', attacks_path, :class=>"btn btn-lg pull-right", :style=>"padding:7px 20px; margin-top:3%; margin-left: 1%"%>
     <div class="actions">
       <%= f.submit :class=>"btn btn-lg pull-right", :style=>"padding:7px; margin-top:3%;"%>
     </div>

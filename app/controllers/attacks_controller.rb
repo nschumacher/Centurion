@@ -47,6 +47,7 @@ class AttacksController < ApplicationController
     @lastAttackID.to_s
     @lastAttackID = "AX#{@lastAttackID}"
     @myURL = params[:attack][:url]
+    @attackMode = "New"
     #puts @myURL
     #/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/
     matchData = @myURL.to_s.match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)/).to_s
@@ -141,6 +142,8 @@ class AttacksController < ApplicationController
   # GET /attacks/1/edit
   def edit
     # allow for ajax
+    @myURL = Attack.find(params[:id]).url
+    @attackMode = "Editing"
     respond_to do |format|
       # format.js
       format.html
